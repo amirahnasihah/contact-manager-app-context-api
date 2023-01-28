@@ -1,3 +1,9 @@
+# CRUD
+C = Create -> Add
+R = Read -> List
+U =Update -> Edit
+D = Delete -> Delete
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
