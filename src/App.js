@@ -6,7 +6,7 @@ import AddContact from "./components/AddContact";
 import ListContact from "./components/ListContact";
 
 function App() {
-  const contactList = [
+  const contacts = [
     {
       id: 1,
       name: "John",
@@ -59,7 +59,7 @@ function App() {
           }}
         >
           <AddContact />
-          <ListContact contactList={contactList} />
+          <ListContact contacts={contacts} />
         </Box>
         {/* <Box sx={{ gridArea: "sidebar", bgcolor: "error.main" }}></Box> */}
         <Box

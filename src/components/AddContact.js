@@ -1,9 +1,10 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
+import "../App.css";
 
 const AddContact = () => {
   return (
-    <div>
+    <div className="App">
       <h3>Add Contact</h3>
       <Box
         component="form"
@@ -27,13 +28,19 @@ const AddContact = () => {
             variant="outlined"
           />
         </div>
-        <div>
-          <label htmlFor="image">File</label>
-          <input type="file" accept="image/*" />
-        </div>
-        <div>
+        <Box>
+          <Button variant="outlined" component="label">
+            Upload Image
+            <input hidden accept="image/*" multiple type="file" />
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            m: 1,
+          }}
+        >
           <Button variant="contained">Add</Button>
-        </div>
+        </Box>
       </Box>
     </div>
   );
