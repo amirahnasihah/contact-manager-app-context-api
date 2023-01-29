@@ -4,25 +4,28 @@ import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
 import AddContact from "./components/AddContact";
 import ListContact from "./components/ListContact";
+import { useState } from "react";
 
 function App() {
-  const contacts = [
-    {
-      id: 1,
-      name: "John",
-      email: "john@example.com",
-    },
-    {
-      id: 2,
-      name: "Jane",
-      email: "jane@example.com",
-    },
-    {
-      id: 3,
-      name: "David",
-      email: "david@example.com",
-    },
-  ];
+  const [contacts, setContacts] = useState([]);
+
+  // const contacts = [
+  //   {
+  //     id: 1,
+  //     name: "John",
+  //     email: "john@example.com",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Jane",
+  //     email: "jane@example.com",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Rui",
+  //     email: "rui@example.com",
+  //   },
+  // ];
 
   return (
     <Grid
