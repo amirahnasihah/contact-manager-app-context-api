@@ -2,7 +2,7 @@ import { Box, Button, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../App.css";
 
-const AddContact = () => {
+const AddContact = ({ addContactHandler }) => {
   const contactForm = {
     name: "",
     email: "",
@@ -10,12 +10,15 @@ const AddContact = () => {
 
   const [addContactForm, setAddContactForm] = useState(contactForm);
 
-  const addContact = (e) => {
+  // addContactHandler to submit the form and setAddContactForm clear the form
+  const add = (e) => {
     e.preventDefault();
     if (addContactForm.name === "" || addContactForm.email === "") {
       alert("All the fields are required");
       return;
     }
+    addContactHandler({ ...addContactForm });
+    setAddContactForm({ name: "", email: "" });
   };
 
   return (
@@ -28,7 +31,7 @@ const AddContact = () => {
           "& .MuiTextField-root": { m: 1, width: "25ch" },
         }}
         autoComplete="off"
-        onSubmit={addContact}
+        onSubmit={add}
       >
         <div>
           <TextField

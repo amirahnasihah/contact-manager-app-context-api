@@ -1,31 +1,31 @@
-import { Box, Grid } from "@mui/material";
 import "./App.css";
+import { Box, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
 import AddContact from "./components/AddContact";
 import ListContact from "./components/ListContact";
-import { useState } from "react";
 
 function App() {
   const [contacts, setContacts] = useState([]);
+  const LOCAL_STORAGE_KEY = "contacts";
 
-  // const contacts = [
-  //   {
-  //     id: 1,
-  //     name: "John",
-  //     email: "john@example.com",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Jane",
-  //     email: "jane@example.com",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Rui",
-  //     email: "rui@example.com",
-  //   },
-  // ];
+  // ADD
+  const addContactHandler = (contact) => {
+    console.log("addContactHandler", contact);
+    setContacts([...contacts, contact]);
+  };
+
+  useEffect(() => {
+    const retrieveContacts = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEY)
+    );
+    if (retrieveContacts) setContacts(retrieveContacts);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
+  }, [contacts]);
 
   return (
     <Grid
@@ -61,7 +61,7 @@ function App() {
             bgcolor: "secondary.main",
           }}
         >
-          <AddContact />
+          <AddContact addContactHandler={addContactHandler} />
           <ListContact contacts={contacts} />
         </Box>
         {/* <Box sx={{ gridArea: "sidebar", bgcolor: "error.main" }}></Box> */}
