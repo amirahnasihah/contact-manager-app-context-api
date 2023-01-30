@@ -387,3 +387,47 @@ useEffect(() => {
 The code checks if the value of the `retrieveContacts` is truthy (not `null`, `undefined`, `0`, `false`, `""`, or `NaN`), then it sets the state `contacts` to the value of `retrieveContacts`.
 
 This approach is commonly used to update the state based on some condition. In this case, it's checking whether the contacts have been retrieved from local storage and if so, it's setting the state `contacts` to the retrieved contacts.
+
+## Unique ID w/ uuidv4
+
+Focus on the code line `setContacts([...contacts, { id: uuidv4(), ...contact }]); `.
+
+```javascript
+const addContactHandler = (contact) => {
+        console.log(contact);
+        setContacts([...contacts, { id: uuidv4(), ...contact }]);
+    };
+```
+
+This code is a JavaScript function named `addContactHandler`. It takes one argument `contact` which is an object containing information about a contact (for example, `name` and `email`).
+
+Here's what the code does, line by line:
+
+1. `console.log(contact)` is the code logs the `contact` object to the console, so that the programmer can inspect its values.
+
+2. `setContacts([...contacts, { id: uuidv4(), ...contact }])` is the function updates the state of the `contacts` using the `setContacts` hook. The `contacts` state is an array of objects representing all the contacts.
+
+The code is spreading the existing `contacts` state using the spread operator (`...contacts`) and then adding a new object to the end of the array using the object literal syntax. This new object contains the `contact` object that was passed as an argument to the `addContactHandler` function, and also contains a unique identifier `id` generated using the `uuidv4` function.
+
+In other words, the `addContactHandler` function is used to add a new contact to the list of existing contacts by updating the `contacts` state with a new contact object that includes the unique identifier `id`.
+
+## Differences when refreshing the browser
+
+```javascript
+const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
+  );
+
+// OR
+
+useEffect(() => {
+    const retrieveContacts = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEY)
+    );
+    if (retrieveContacts) setContacts(retrieveContacts);
+  }, []);
+```
+
+The difference between the two code snippets is that in **the first one, you are setting the initial value of the `contacts` state using the data stored in the local storage.** When the component is re-rendered, the value of `contacts` will be kept and **not lost, as it's set to the data from local storage at the beginning.**
+
+In the **second code snippet, using the `useEffect` hook to retrieve the data from local storage every time the component is re-rendered.** The component only retrieves the data once, at the first render, since the second argument of the `useEffect` hook is an empty array `[]`. This means that the hook will only run on mount (i.e. the first render) and not re-run after that. Hence, when the component is refreshed, the `useEffect` hook is not triggered and the `contacts` state is not updated from the local storage, leading to data loss.
