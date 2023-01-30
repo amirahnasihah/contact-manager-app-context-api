@@ -1,6 +1,28 @@
 # Code Explaination Line By Line
 
-## JavaScript Spread Operator + Form Submit
+- [Code Explaination Line By Line](#code-explaination-line-by-line)
+  - [Add Function](#add-function)
+    - [JavaScript Spread Operator + Form Submit](#javascript-spread-operator--form-submit)
+    - [From a Child to Parent PART 01](#from-a-child-to-parent-part-01)
+    - [From a Child to Parent PART 02 w/ Object Properties](#from-a-child-to-parent-part-02-w-object-properties)
+    - [From a Child to Parent PART 03 w/ useState](#from-a-child-to-parent-part-03-w-usestate)
+  - [Add Contact Form between Array and Object](#add-contact-form-between-array-and-object)
+  - [Processing Data w/ local storage](#processing-data-w-local-storage)
+    - [Save Data in local storage w/ useEffect](#save-data-in-local-storage-w-useeffect)
+    - [Get the Data Back - getItem vs setItem || parse vs stringify](#get-the-data-back---getitem-vs-setitem--parse-vs-stringify)
+    - [Retrieved Data w/ JSON.parse and getItem](#retrieved-data-w-jsonparse-and-getitem)
+  - [Create Unique ID w/ `uuidv4`](#create-unique-id-w-uuidv4)
+  - [Differences when refreshing the browser, Data not loses](#differences-when-refreshing-the-browser-data-not-loses)
+  - [Delete Function](#delete-function)
+    - [Different approaches to delete](#different-approaches-to-delete)
+    - [Delete Function Approach 2](#delete-function-approach-2)
+    - [Passing Functions Through Multiple Props w/ delete function](#passing-functions-through-multiple-props-w-delete-function)
+    - [The onClick Delete Button Passed Correctly](#the-onclick-delete-button-passed-correctly)
+  - [React Router DOM](#react-router-dom)
+
+## Add Function
+
+### JavaScript Spread Operator + Form Submit
 
 ```jsx
 const contactForm = {
@@ -37,7 +59,7 @@ Then the **setAddContactForm function updates the addContactForm object with thi
 
 In addition, **`e.target.value` is the current value of the input element**, it's getting the value of the input element every time the input is changed, that's why it's able to update the input value dynamically.
 
-## From a Child to Parent PART 01
+### From a Child to Parent PART 01
 
 Pass something from a child to parent we can actually use the prop. can pass a function as prop.
 
@@ -130,7 +152,7 @@ function Child({setData}) {
 
 All of the above methods can be used to pass data from a child to a parent component in React. The best method for your use case will depend on the specific requirements of your application.
 
-## From a Child to Parent PART 02 w/ Object Properties
+### From a Child to Parent PART 02 w/ Object Properties
 
 This code is setting up a form that allows a user to add a contact with a name and email.
 
@@ -176,7 +198,7 @@ At Concole:
 
 This approach is used to handle the form fields within a component's state, allowing for easy updates and validation of the form fields before passing the information to a parent component or external function for handling. The `useState` hook allows for easy management of the state within the component.
 
-## From a Child to Parent PART 03 w/ useState
+### From a Child to Parent PART 03 w/ useState
 
 Other example of ways using useState hook:
 
@@ -219,7 +241,10 @@ This code is creating a form for adding a contact, which has two fields: "name" 
 
 In this case, since the state is an object literal, we use the spread operator to create a copy of the state, thus we can pass it to the `addContactHandler` function without modifying the original state. This approach ensures that the component's state remains consistent and that any changes made to the form fields are reflected in the component's state. Additionally, it also allows for easy updating and tracking of the form fields.
 
-## `setAddContactForm({ ...addContactForm, name: e.target.value })` and `setContacts([...contacts, contact]);`
+## Add Contact Form between Array and Object
+
+
+`setAddContactForm({ ...addContactForm, name: e.target.value })` and `setContacts([...contacts, contact]);`
 
 The difference between the two is that the **first line of code updates an object**, while the **second line of code updates an array**. That's why the first line of code is wrapped in curly braces (`{}`) and the second line of code is wrapped in square brackets (`[]`).
 
@@ -277,7 +302,7 @@ The new object has the following properties:
 
 This approach allows the code to keep track of all the existing contacts while adding a new contact to the list with a unique identifier.
 
-## Processing the Data w/ local storage
+## Processing Data w/ local storage
 
 Using the local storage have to use the useEffect hook.
 
@@ -306,7 +331,7 @@ Here's a step-by-step explanation of what's happening:
 
 6. If the component is removed from the DOM (i.e., it's unmounted), the optional cleanup function will run. This is a way to clean up any side effects created by the effect.
 
-### useEffect
+### Save Data in local storage w/ useEffect
 
 ```javascript
 const LOCAL_STORAGE_KEY = "contacts";
@@ -316,7 +341,7 @@ useEffect(() => {
     }, [contacts]);
 ```
 
-This code is utilizing the useEffect hook in a React component. Here's a step-by-step explanation:
+This code is utilizing the `useEffect` hook in a React component. Here's a step-by-step explanation:
 
 1. The first line `const LOCAL_STORAGE_KEY = "contacts"` declares a constant variable named `LOCAL_STORAGE_KEY` and assigns the string value `"contacts"` to it. This will be used as a key to store data in the local storage of the user's browser.
 
@@ -335,7 +360,9 @@ Local Storage will look like this:
 | contacts | [{"name":"john","email":"john@example.com"}] |
 
 
-### JSON.parse vs JSON.stringify && getItem vs setItem
+### Get the Data Back - getItem vs setItem || parse vs stringify
+
+JSON.parse vs JSON.stringify && getItem vs setItem
 
 ```javascript
 useEffect(() => {
@@ -349,7 +376,7 @@ useEffect(() => {
 }, [contacts]);
 ```
 
-The first code:
+1. The first code:
 
 ```javascript
 useEffect(() => {
@@ -357,9 +384,9 @@ useEffect(() => {
 }, [contacts]);
 ```
 
-This `useEffect` hook retrieves, get or bring (something) back the data from the local storage using the key `LOCAL_STORAGE_KEY` and parses it from a string representation to a JavaScript object. The hook is triggered to run only when the `contacts` data changes, as specified by the dependency array `[contacts]`.
+This `useEffect` hook retrieves/get/bring (`something`) back the data from the local storage using the key `LOCAL_STORAGE_KEY` and parses it from a string representation to a JavaScript object. The hook is triggered to run only when the `contacts` data changes, as specified by the dependency array `[contacts]`.
 
-The second code:
+2. The second code:
 
 ```javascript
 useEffect(() => {
@@ -371,7 +398,7 @@ This `useEffect` hook saves the `contacts` data to local storage using the key `
 
 By using the **`useEffect` hook, the component will handle storing and retrieving data from local storage automatically**, without the need to manually call these functions every time the component updates.
 
-### getItem
+### Retrieved Data w/ JSON.parse and getItem
 
 ```javascript
 useEffect(() => {
@@ -388,7 +415,7 @@ The code checks if the value of the `retrieveContacts` is truthy (not `null`, `u
 
 This approach is commonly used to update the state based on some condition. In this case, it's checking whether the contacts have been retrieved from local storage and if so, it's setting the state `contacts` to the retrieved contacts.
 
-## Unique ID w/ uuidv4
+## Create Unique ID w/ `uuidv4`
 
 Focus on the code line `setContacts([...contacts, { id: uuidv4(), ...contact }]); `.
 
@@ -411,7 +438,7 @@ The code is spreading the existing `contacts` state using the spread operator (`
 
 In other words, the `addContactHandler` function is used to add a new contact to the list of existing contacts by updating the `contacts` state with a new contact object that includes the unique identifier `id`.
 
-## Differences when refreshing the browser
+## Differences when refreshing the browser, Data not loses
 
 ```javascript
 const [contacts, setContacts] = useState(
@@ -428,6 +455,175 @@ useEffect(() => {
   }, []);
 ```
 
-The difference between the two code snippets is that in **the first one, you are setting the initial value of the `contacts` state using the data stored in the local storage.** When the component is re-rendered, the value of `contacts` will be kept and **not lost, as it's set to the data from local storage at the beginning.**
+1. The difference between the two code snippets is that in **the first one, you are setting the initial value of the `contacts` state using the data stored in the local storage.** When the component is re-rendered, the value of `contacts` will be kept and **not lost, as it's set to the data from local storage at the beginning.**
 
-In the **second code snippet, using the `useEffect` hook to retrieve the data from local storage every time the component is re-rendered.** The component only retrieves the data once, at the first render, since the second argument of the `useEffect` hook is an empty array `[]`. This means that the hook will only run on mount (i.e. the first render) and not re-run after that. Hence, when the component is refreshed, the `useEffect` hook is not triggered and the `contacts` state is not updated from the local storage, leading to data loss.
+2. In the **second code snippet, using the `useEffect` hook to retrieve the data from local storage every time the component is re-rendered.** The component only retrieves the data once, at the first render, since the second argument of the `useEffect` hook is an empty array `[]`. This means that the hook will only run on mount (i.e. the first render) and not re-run after that. Hence, when the component is refreshed, the `useEffect` hook is not triggered and the `contacts` state is not updated from the local storage, leading to data loss.
+
+## Delete Function
+
+To make a delete function in React, you can define a function that **takes the `id` of the contact to be deleted as an argument**, find the index of that contact in the `contacts` array, and then use the `setContacts` function to create a new array with the contact removed. Here's an example:
+
+```javascript
+const deleteContact = (id) => {
+  const index = contacts.findIndex(contact => contact.id === id);
+  if (index !== -1) {
+    const newContacts = [...contacts];
+    newContacts.splice(index, 1);
+    setContacts(newContacts);
+  }
+};
+```
+
+This function first uses the `Array.prototype.findIndex` method to find the index of the contact with the given `id`. If the index is found, it creates a new array `newContacts` with the same elements as the original `contacts` array. Then, it uses the `Array.prototype.splice` method to remove the element at the specified index. Finally, it calls the `setContacts` function to update the state with the new array.
+
+### Different approaches to delete
+
+What's the differences between this two approach. Why it difference?
+
+```javascript
+// APPROACH 1 🔍
+const deleteContact = (id) => {
+  const index = contacts.findIndex(contact => contact.id === id);
+  if (index !== -1) {
+    const newContacts = [...contacts];
+    newContacts.splice(index, 1);
+    setContacts(newContacts);
+  }
+};
+
+// APPROACH 2 ✅
+const removeContactHandler = (id) => {
+  const newContactList = contacts.filter((contact) => {
+    return contact.id !== id;
+  });
+
+  setContacts(newContactList);
+};
+```
+
+Both approaches serve the same purpose, which is to remove a specific contact from a list of contacts.
+
+**Approach 1:**
+
+1. Declares a function deleteContact which takes in an id as an argument
+
+2. The function uses the Array.prototype.findIndex method to find the index of the contact with the specified id
+
+3. If the index is not equal to -1, meaning the contact is found in the list, it creates a new array newContacts which is a copy of the contacts array
+
+4. Then it uses the Array.prototype.splice method to remove the found contact from the new array
+
+5. Finally, it calls the setContacts function to update the state with the new array newContacts
+
+**Approach 2:**
+
+1. Declares a function removeContactHandler which takes in an id as an argument
+
+2. The function uses the Array.prototype.filter method to create a new array newContactList which only contains the contacts with an id that is not equal to the specified id
+
+3. Finally, it calls the setContacts function to update the state with the new array newContactList
+
+Both approaches will result in removing the specified contact from the list, but approach 2 is more concise and preferred in most cases because it is easier to understand and less prone to bugs.
+
+### Delete Function Approach 2
+
+```javascript
+const removeContactHandler = (id) => {
+  const newContactList = contacts.filter((contact) => {
+    return contact.id !== id;
+  });
+
+  setContacts(newContactList);
+};
+```
+
+This is a function deleteContact in JavaScript which is used to delete a contact from a list of contacts.
+
+Line by line:
+
+1. `const deleteContact = (id)`: This line declares a function named `deleteContact` and it takes one argument `id` which is the identifier of the contact that needs to be deleted.
+
+2. `const newContacts = contacts.filter((contact) => {`: This line creates a new constant named `newContacts` and assigns the value of `contacts` filtered based on a condition.
+
+3. `return contact.id !== id;`: This line defines the condition that is used to filter the `contacts` array. The filter returns a new array where `contact.id` is not equal to the passed `id`. This means that the contacts whose `id` matches the passed `id` will be excluded from the new array `newContacts`.
+
+4. `setContacts(newContacts);`: This line updates the state of `contacts` by calling the `setContacts` function and passing the newly created `newContacts` array. The `setContacts` function updates the `contacts` state and the UI will be re-rendered with the updated data.
+
+Overall, the deleteContact function filters the contacts array by excluding the contact with the passed id and updates the contacts state with the newly created array, which results in deleting a contact from the list.
+
+### Passing Functions Through Multiple Props w/ delete function
+
+> Passing the click handler from the inner child to the its parent and then from parent to its parent. which is the contact card it will give the id to the contact list from the contact list is going to give the id to the app.
+
+Passing functions from a child component to its parent and then from the parent to its grandparent can be done through multiple props.
+
+To pass a delete function from a child component to its parent and then from the parent to its grandparent, you can pass the function down through multiple props. Here is an example:
+
+1. Create a delete function in the grandparent component:
+
+```javascript
+const deleteHandler = (id) => {
+  // logic to delete the item with id
+}
+```
+
+2. Pass the delete function to the parent component through props:
+
+```javascript
+<ParentComponent deleteHandler={deleteHandler} />
+```
+
+3. Pass the delete function to the child component through props:
+
+```javascript
+const ParentComponent = (props) => {
+  return (
+    <ChildComponent deleteHandler={props.deleteHandler} />
+  );
+}
+```
+
+4. Use the delete function in the child component:
+
+```javascript
+const ChildComponent = (props) => {
+  const handleDelete = () => {
+    props.deleteHandler(id);
+  }
+
+  return (
+    <button onClick={handleDelete}>Delete</button>
+  );
+}
+```
+
+This way, the delete function is passed from the grandparent to the child component through the parent component.
+
+### The onClick Delete Button Passed Correctly
+
+The second and third code do not work because they don't correctly pass the `deleteHandler` function to the `onClick` event.
+
+```javascript
+// First code✅
+onClick={() => deleteHandler(id)}
+
+// Second code❌
+onClick={deleteHandler}
+// console -> "deleteHandler" -> SyntheticBaseEvent {_reactName: 'onClick', _targetInst: null, type: 'click', nativeEvent: PointerEvent, target: 
+
+// Third code❌
+onClick={deleteHandler(id)}
+// console -> "deleteHandler" -> give the unique id of each list and remove all with error warning
+```
+
+1. The first code works because it's **calling a function with an argument (`id`)** when the `DeleteIcon` is clicked. The function, `deleteHandler` is called with the `id` as a parameter and the logic inside that function is executed. This ensures that the correct `id` is passed to the `deleteHandler` function when it's called.
+
+2. The second code doesn't work because it's **calling the `deleteHandler` function without any parameters**, missing the argument `id`. So, if the `deleteHandler` function requires a specific parameter, it won't receive it and could result in an error or unexpected behavior.
+
+3. The third code also doesn't work because it's calling the `deleteHandler` function immediately, instead of passing it as a reference to the onClick event. This means that the deleteHandler function will be called immediately, rather than when the DeleteIcon is clicked.
+
+It's important to **understand the difference between passing a reference to a function and, calling a function.**
+
+In the **first** code, `() => deleteHandler(id)` creates a new anonymous function that calls `deleteHandler` with `id` as an argument. In the **second** code, `deleteHandler` is passed as a reference and will be executed directly when the `DeleteIcon` is clicked. The third code calls the `deleteHandler` function immediately.
+
+## React Router DOM

@@ -1,11 +1,18 @@
+import { Link } from "@mui/material";
 import React from "react";
 
 const FooterContact = () => {
   return (
     <div>
-      <a href="www" alt="github repo link" target="_blank">
-        GitHub Repo
-      </a>
+      <Link
+        href="https://github.com/amirahnasihah/contact-manager-app-context-api"
+        underline="hover"
+        alt="github repo link"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {"GitHub Repo"}
+      </Link>
     </div>
   );
 };

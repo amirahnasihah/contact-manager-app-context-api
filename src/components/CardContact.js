@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
 import user from "../images/user.png";
 
-const CardContact = ({ contact }) => {
+const CardContact = ({ contact, deleteHandler }) => {
   const { id, name, email } = contact;
 
   return (
@@ -35,7 +35,7 @@ const CardContact = ({ contact }) => {
         </CardContent>
 
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
+          <IconButton aria-label="add to favorites" onClick={deleteHandler}>
             <DeleteIcon />
           </IconButton>
         </CardActions>

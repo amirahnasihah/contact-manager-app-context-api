@@ -8,7 +8,7 @@ const Header = () => {
         <AppBar position="static">
           <Toolbar sx={{ backgroundColor: "white" }}>
             <Typography
-              variant="h6"
+              variant="h5"
               component="div"
               sx={{ flexGrow: 1, color: "black", fontWeight: "bold" }}
             >

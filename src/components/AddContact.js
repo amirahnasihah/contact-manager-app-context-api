@@ -23,7 +23,7 @@ const AddContact = ({ addContactHandler }) => {
 
   return (
     <div className="App">
-      <h3>Add Contact Form</h3>
+      <h2>Add Contact Form</h2>
 
       <Box
         component="form"
