@@ -19,6 +19,8 @@
     - [Passing Functions Through Multiple Props w/ delete function](#passing-functions-through-multiple-props-w-delete-function)
     - [The onClick Delete Button Passed Correctly](#the-onclick-delete-button-passed-correctly)
 - [React Router](#react-router)
+  - [Configuring The Router](#configuring-the-router)
+  - [Defining Routes](#defining-routes)
 
 ## Add Function
 
@@ -639,3 +641,50 @@ React Router DOM provides several components for defining routes and navigation,
 
 React Router DOM also provides several features for customizing routing, such as query parameters, URL parameters, and programmatic navigation.
 
+3 things you need to do in order to use React Router.
+
+1. Setup your router
+2. Define your routes
+3. Handle navigation
+
+Read here 👉 [Ultimate React Router v6 Guide](https://blog.webdevsimplified.com/2022-07/react-router/)
+
+## Configuring The Router
+
+Import your router in the `index.js` page of your application and it will wrap your `App` component. The router works just like a context in React and provides all the necessary information to your application so you can do routing and use all the custom hooks from React Router.
+
+**Example: index.js**
+
+```javascript
+import { BrowserRouter } from "react-router-dom"
+
+const root = ReactDOM.createRoot(document.getElementById("root"))
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+)
+```
+
+## Defining Routes
+
+Commonly done at the top level of your application, such as in the App component, but can be done anywhere you want.
+
+**Example: App.js**
+
+```javascript
+import { Route, Routes } from "react-router-dom"
+import { Home } from "./Home"
+import { BookList } from "./BookList"
+
+export function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/books" element={<BookList />} />
+    </Routes>
+  )
+}
+```

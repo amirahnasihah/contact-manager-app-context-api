@@ -1,6 +1,5 @@
 import {
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
@@ -17,7 +16,7 @@ const CardContact = ({ contact, deleteHandler }) => {
 
   return (
     <Grid sx={{ p: 1 }}>
-      <Card sx={{ maxWidth: "auto", display: "flex" }}>
+      <Card sx={{ display: "flex" }}>
         <CardMedia
           component="img"
           sx={{ width: 90 }}
@@ -37,6 +36,7 @@ const CardContact = ({ contact, deleteHandler }) => {
         <CardActions disableSpacing>
           <IconButton
             aria-label="add to favorites"
+            sx={{ color: "red" }}
             onClick={() => deleteHandler(id)}
           >
             <DeleteIcon />

@@ -1,8 +1,8 @@
 import "./App.css";
-import { Box, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Route, Routes, Link, Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
 import AddContact from "./components/AddContact";
@@ -48,17 +48,22 @@ function App() {
         flexGrow: 1,
       }}
     >
-      <Header />
-      <Box
-        sx={{
-          gridArea: "main",
-          bgcolor: "secondary.main",
-        }}
-      >
-        <AddContact addContactHandler={addContactHandler} />
-        <ListContact contacts={contacts} deleteContact={deleteContact} />
-      </Box>
+      <div>
+        <Link to={`add`}>
+          <Button variant="contained">Add Contact</Button>
+        </Link>
+      </div>
+      {/* <Routes> */}
+      {/* <Header /> */}
+      {/* <Route path="/" element={<ListContact />} />
+        <Route path="/add" element={<AddContact />} /> */}
+      {/* <AddContact addContactHandler={addContactHandler} /> */}
+      <ListContact contacts={contacts} deleteContact={deleteContact} />
+      <div id="detail">
+        <Outlet />
+      </div>
       <FooterContact />
+      {/* </Routes> */}
     </Grid>
   );
 }

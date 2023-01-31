@@ -7,7 +7,7 @@ const FooterContact = () => {
       <Box
         sx={{
           gridArea: "footer",
-          bgcolor: "warning.dark",
+          bgcolor: "dark",
           textAlign: "center",
         }}
       >
