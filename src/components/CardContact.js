@@ -35,7 +35,10 @@ const CardContact = ({ contact, deleteHandler }) => {
         </CardContent>
 
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={deleteHandler}>
+          <IconButton
+            aria-label="add to favorites"
+            onClick={() => deleteHandler(id)}
+          >
             <DeleteIcon />
           </IconButton>
         </CardActions>

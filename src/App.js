@@ -2,6 +2,7 @@ import "./App.css";
 import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
 import AddContact from "./components/AddContact";
@@ -47,45 +48,17 @@ function App() {
         flexGrow: 1,
       }}
     >
+      <Header />
       <Box
         sx={{
-          display: "grid",
-          gap: 1,
-          gridTemplateRows: "repeat(1, 1fr)",
-          gridTemplateAreas: `"header header header header"
-  "main main main main"
-  "footer footer footer footer"`,
+          gridArea: "main",
+          bgcolor: "secondary.main",
         }}
       >
-        <Box
-          sx={{
-            gridArea: "header",
-            bgcolor: "primary.main",
-            textAlign: "center",
-          }}
-        >
-          <Header />
-        </Box>
-        <Box
-          sx={{
-            gridArea: "main",
-            bgcolor: "secondary.main",
-          }}
-        >
-          <AddContact addContactHandler={addContactHandler} />
-          <ListContact contacts={contacts} deleteContact={deleteContact} />
-        </Box>
-        {/* <Box sx={{ gridArea: "sidebar", bgcolor: "error.main" }}></Box> */}
-        <Box
-          sx={{
-            gridArea: "footer",
-            bgcolor: "warning.dark",
-            textAlign: "center",
-          }}
-        >
-          <FooterContact />
-        </Box>
+        <AddContact addContactHandler={addContactHandler} />
+        <ListContact contacts={contacts} deleteContact={deleteContact} />
       </Box>
+      <FooterContact />
     </Grid>
   );
 }

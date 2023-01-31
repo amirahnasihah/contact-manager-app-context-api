@@ -18,7 +18,7 @@
     - [Delete Function Approach 2](#delete-function-approach-2)
     - [Passing Functions Through Multiple Props w/ delete function](#passing-functions-through-multiple-props-w-delete-function)
     - [The onClick Delete Button Passed Correctly](#the-onclick-delete-button-passed-correctly)
-  - [React Router DOM](#react-router-dom)
+- [React Router](#react-router)
 
 ## Add Function
 
@@ -626,4 +626,16 @@ It's important to **understand the difference between passing a reference to a f
 
 In the **first** code, `() => deleteHandler(id)` creates a new anonymous function that calls `deleteHandler` with `id` as an argument. In the **second** code, `deleteHandler` is passed as a reference and will be executed directly when the `DeleteIcon` is clicked. The third code calls the `deleteHandler` function immediately.
 
-## React Router DOM
+# React Router
+
+React Router DOM is a library for routing in React applications. It allows developers to declaratively manage navigation within a React application by mapping components to different URLs. When a URL is matched, React Router DOM renders the associated component, making it easy to create a single-page application with multiple views.
+
+React Router DOM provides several components for defining routes and navigation, including:
+
+- `<BrowserRouter>`: A high-level component that wraps around the application and provides routing context.
+- `<Route>`: A component that specifies the component to render when a URL matches its specified path.
+- `<Link>`: A component that provides a clickable element for navigating to a different route.
+- `<Switch>`: A component that renders the first child `<Route>` that matches the current URL.
+
+React Router DOM also provides several features for customizing routing, such as query parameters, URL parameters, and programmatic navigation.
+
