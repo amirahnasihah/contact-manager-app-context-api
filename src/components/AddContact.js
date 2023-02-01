@@ -74,7 +74,7 @@ const AddContact = ({ addContactHandler }) => {
             <Button variant="contained" type="submit" color="success">
               Add
             </Button>
-            <Link to={`/`}>
+            <Link to={`/`} className="link-btn">
               <Button variant="contained">Back</Button>
             </Link>
           </Box>

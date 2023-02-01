@@ -22,6 +22,7 @@
   - [Configuring The Router](#configuring-the-router)
   - [Defining Routes](#defining-routes)
     - [Add Props to the Component in a Route](#add-props-to-the-component-in-a-route)
+    - [TypeError Cannot read properties of undefined (reading 'map')](#typeerror-cannot-read-properties-of-undefined-reading-map)
 - [React Router V5](#react-router-v5)
   - [Add Props to the Component in a Route](#add-props-to-the-component-in-a-route-1)
 
@@ -711,6 +712,39 @@ This code is using the `Route` component from a library called React Router. Her
 5. `/> `- This closes the `Route` component declaration.
 
 In summary, this code sets up a new `Route` component that will be displayed when the URL is exactly `/`. The Route component will render the `ListContact` component and pass it two props, `contacts` and `deleteContact`. Additionally, any props passed to the `Route` component will also be passed to the `ListContact` component.
+
+### TypeError Cannot read properties of undefined (reading 'map')
+
+```javascript
+// ListContact.js
+const ListContact = ({ contacts, deleteContact }) => { ... };
+
+const contacts = [
+  {
+    id: 1,
+    name: "John",
+    email: "john@gmail.com",
+  },
+];
+
+
+const renderContactList = contacts.map((contact) => {...}
+
+
+// App.js
+<Route exact path={`/`} element={<ListContact  contacts={contacts} deleteContact={deleteContact} />} />
+```
+
+The error is occurring because the `contacts` array is declared within the `ListContact` component, but it is **not being passed as a prop to the `ListContact` component when it is being rendered in the `App.js` file.**
+
+The `renderContactList` function is trying to access the `contacts` array, but because it is declared within the `ListContact` component, it is not accessible outside of that component.
+
+- To fix the error, the `contacts` array should be passed as a prop to the `ListContact` component in the` App.js` file:
+
+```javascript
+// App.js
+<Route exact path={`/`} element={<ListContact contacts={contacts} deleteContact={deleteContact} /> />} />
+```
 
 # React Router V5
 

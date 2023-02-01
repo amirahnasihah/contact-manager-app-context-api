@@ -1,9 +1,10 @@
+import "../index.css";
 import { Box, Link } from "@mui/material";
 import React from "react";
 
 const FooterContact = () => {
   return (
-    <div>
+    <div className="footer">
       <Box
         sx={{
           gridArea: "footer",

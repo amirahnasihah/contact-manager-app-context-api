@@ -53,20 +53,16 @@ function App(props) {
         <Route
           exact
           path={`/`}
-          {...props}
           element={
             <ListContact contacts={contacts} deleteContact={deleteContact} />
           }
         />
         <Route
           path={`/add`}
-          {...props}
           element={<AddContact addContactHandler={addContactHandler} />}
         />
       </Routes>
       <FooterContact />
-      {/* <AddContact addContactHandler={addContactHandler} />
-      <ListContact contacts={contacts} deleteContact={deleteContact} /> */}
     </Grid>
   );
 }
