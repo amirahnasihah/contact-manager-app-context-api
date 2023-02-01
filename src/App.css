@@ -41,5 +41,7 @@
 
 .link-btn {
   text-decoration: none;
-  padding: 8px;
+  margin: 5px;
+  color: inherit;
+  font-family: inherit;
 }

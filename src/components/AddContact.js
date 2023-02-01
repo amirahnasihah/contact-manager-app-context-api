@@ -1,7 +1,7 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../App.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddContact = ({ addContactHandler }) => {
   const contactForm = {
@@ -10,6 +10,7 @@ const AddContact = ({ addContactHandler }) => {
   };
 
   const [addContactForm, setAddContactForm] = useState(contactForm);
+  const navigate = useNavigate();
 
   // addContactHandler to submit the form and setAddContactForm clear the form
   const add = (e) => {
@@ -20,6 +21,7 @@ const AddContact = ({ addContactHandler }) => {
     }
     addContactHandler({ ...addContactForm });
     setAddContactForm({ name: "", email: "" });
+    navigate(-1);
   };
 
   return (

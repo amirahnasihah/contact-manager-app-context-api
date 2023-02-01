@@ -27,7 +27,13 @@
       - [Default Exports](#default-exports)
     - [to="/add" vs to={`/add`}](#toadd-vs-toadd)
     - [Add Props to the Component in a Route - Alt Ways](#add-props-to-the-component-in-a-route---alt-ways)
-    - [Auto Redirecting After Submitted Form](#auto-redirecting-after-submitted-form)
+      - [V6](#v6)
+    - [Auto Redirecting After Submitted Form / Programmatically Navigation](#auto-redirecting-after-submitted-form--programmatically-navigation)
+    - [Go to the particular Contact page w/ Link](#go-to-the-particular-contact-page-w-link)
+    - [Link from react-router-dom](#link-from-react-router-dom)
+    - [Link vs useNavigate()](#link-vs-usenavigate)
+    - [Updating the contact details (Important)](#updating-the-contact-details-important)
+      - [state property](#state-property)
 
 ## Add Function
 
@@ -801,7 +807,7 @@ What's the difference between these three codes and why it's difference?
 // First code:
 <Route exact path="/" {...props} element={<ListContact  contacts={contacts} deleteContact={deleteContact} />} />
 
-// Second code:✅
+// Second code:✅ Older v5
 <Route exact path="/" {...props} component={() => ( <ListContact  contacts={contacts} deleteContact={deleteContact} /> )} />
 
 
@@ -809,8 +815,11 @@ What's the difference between these three codes and why it's difference?
 <Route exact path="/" {...props} component={<ListContact  contacts={contacts} deleteContact={deleteContact} />} />
 
 
-// Fourth code:✅
+// Fourth code:✅ Older v5
 <Route exact path="/" render={(props) => ( <ContactList {...props} contacts={contacts} deleteContact={deleteContact} /> )} />;
+
+// V6
+<Route path="/" element={<Home />} />
 ```
 
 How do we add the props when we actually have a component in the route and whats the difference between these three codes and why its difference:
@@ -827,4 +836,242 @@ How do we add the props when we actually have a component in the route and whats
 
 - The **second code is the most flexible**, as it allows you to pass props to the component and is a valid way of rendering a component in a `Route`.
 
-### Auto Redirecting After Submitted Form
+> RRDv6 removed the route props. If you need to access the v6 versions of these objects you will use the React hooks, `useNavigate` for a `navigate` function which replaced the `history` object, `useParams` for `params` instead of `match.params`, and `useLocation` for `location`. I highly suggest reviewing the [migration guide](https://reactrouter.com/en/v6.3.0/upgrading/v5) for the changes from v5 to v6.
+
+#### V6
+
+- Use `<Route element>` instead of `<Route render>` and/or `<Route component>` props.
+- Upgrade from `<Switch>` elements to `<Routes>`.
+- `<Route exact>` is gone. Instead, use a trailing `*` in their path to indicate they match deeply
+
+**Clever ways to get both the route data and your own custom props through to your elements:**
+
+```javascript
+// how do I pass custom props to the <Profile>
+// element? Oh ya, it's just an element. Easy.
+<Route path=":userId" element={<Profile animate={true} />}
+
+
+// Ok, but how do I access the router's data, like the URL params
+// or the current location?
+function Profile({ animate }) {
+  let params = useParams();
+  let location = useLocation();
+}
+
+// But what about components deep in the tree?
+function DeepComponent() {
+  // oh right, same as anywhere else
+  let navigate = useNavigate();
+}
+```
+
+**Nested Routes**
+
+`<Route children>` is reserved for nesting routes.
+
+Hoist all `<Route>` elements into a single route config:
+
+```javascript
+<BrowserRouter>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="users" element={<Users />}>
+      <Route path="me" element={<OwnUserProfile />} />
+      <Route path=":id" element={<UserProfile />} />
+    </Route>
+  </Routes>
+</BrowserRouter>;
+
+
+// A Component
+return (
+  <div>
+    <nav>
+      <Link to="me">My Profile</Link>
+    </nav>
+
+    <Outlet />
+  </div>
+);
+```
+
+
+
+### Auto Redirecting After Submitted Form / Programmatically Navigation
+
+The `useNavigate` hook returns a function that **lets you navigate programmatically**.
+
+> It's usually better to use `redirect` in loaders and actions than this hook.
+
+The navigate function has two signatures:
+
+1. Either pass a `To` value (same type as `<Link to>`) with an optional second `{ replace, state }` arg or;
+2. Pass the delta you want to go in the history stack. For example, `navigate(-1)` is equivalent to hitting the back button.
+
+```javascript
+const navigate = useNavigate();
+
+// Method 1
+navigate("/");
+
+// Method 2
+navigate(-1);
+```
+
+**Example on how it works**
+
+The code is a JavaScript function that's executed when a form is submitted/when clicked add (triggered by an event).
+
+```javascript
+const add = (e) => {
+  e.preventDefault();
+  if (addContactForm.name === "" || addContactForm.email === "") {
+    alert("All the fields are required");
+    return;
+  }
+  addContactHandler({ ...addContactForm });
+  setAddContactForm({ name: "", email: "" });
+  navigate(-1); // <----------- this code
+};
+```
+
+This function code is works in order.
+
+It calls the `navigate` function and passes it `-1` as an argument. This navigates to the previous screen, which is likely to be the screen that displays the list of contacts.
+
+### Go to the particular Contact page w/ Link
+
+Explain the code in simple plain english for beginner, what is it,  purpose, how it works, why line by line?
+
+Have different route for each of our contacts and now we need to create a contact detail page where we can actually see the detail of the particular contact.
+
+**The Link:**
+
+```javascript
+// CardContact.js
+<Link to={`/contact/${id}`}> </Link>
+```
+
+Need to specify the route otherwise an error will be thrown:
+
+```console
+No routes matched location "/contact/e5630f18-cb10-4233-bd49-b53305720b75"
+```
+
+**The Route:**
+
+```javascript
+// App.js
+<Route path="/contact/:id" {...props} element={<DetailContact />} />
+```
+
+### Link from react-router-dom
+
+A `<Link>` is an element that lets the user navigate to another page by clicking or tapping on it.
+
+### Link vs useNavigate()
+
+
+### Updating the contact details (Important)
+
+Contact details should have a same information as the contact card.
+
+```javascript
+// v5
+// CardContact.js
+// Object
+<Link to={{ pathname: `/contact/${id}`, state: { contact: props.contact } }} >To Contact Detail</Link>
+```
+
+**CardContact.js:**
+
+```javascript
+<Link
+  to={{
+    pathname: `/contact/${id}`,
+    state: { contact: props.contact },
+  }}
+>
+  <div className="header">{name}</div>
+  <div className="content">{email}</div>
+</Link>;
+```
+
+```javascript
+<Link to={{ pathname: `/contact/${id}`, state: { contact: contact } }}>...</Link>
+```
+
+- Try `console.log(props)` in the `DetailContact.js` and can see the that we have a object and this object is printed from the line 6 which is the `console.log(props)`.
+- Inside the `location` you can see that there is a key called `state` and in this `state` we can actually see the `contact` which we actually passed and this is what we wanted to display the information of a contact in `DetailContact.js`.
+
+#### state property
+
+The `state` property can be used to set a stateful value for the new location which is stored inside [history state](https://developer.mozilla.org/en-US/docs/Web/API/History/state). This value can subsequently be accessed via `useLocation()`.
+
+```javascript
+<Link to="new-path" state={{ some: "value" }} />
+```
+
+You can access this state value while on the "new-path" route:
+
+```javascript
+let { state } = useLocation();
+```
+
+The `state` property is a way to store values in the history `state` when navigating to a new location in your React application.
+
+Here's how it works:
+
+1. You use the `state` property inside the `Link` component when defining a new path to navigate to. You pass in an object with any data you want to store, like so: `<Link to="new-path" state={{ some: "value" }} />`
+
+2. To access this state data, you use the `useLocation()` hook. It returns an object that contains the current location, including any state values you may have set. You can destructure the state property from this object: `let { state } = useLocation();`
+
+**state no longer work in V6 because the way the props are being destructured has changed**
+
+```javascript
+// v5❌
+const DetailContact = (props) => {
+
+  const { name, email } = props.location.state.contact;
+
+  // some code here
+}
+
+
+// v6✅
+// CardContact.js
+<Link to={{ pathname: `/contact/${id}` }} state={{ contact: contact }}>...</Link>
+```
+
+The code `const DetailContact = (props) => {...} and const { name, email } = props.location.state.contact;` is likely no longer working with React Router DOM version 6 because the way the props are being destructured has changed.
+
+The React Router DOM version 6 will show the following in the console:
+
+```javascript
+// v6
+// DetailContact.js
+const DetailContact = ({ contact }) => {
+  const location = useLocation();
+  console.log(location);
+  const { name, email } = location.state.contact;
+
+  // some code here
+}
+```
+
+```shell
+{
+    "pathname": "/contact/476a6332-7b79-4c55-bbef-9f5e8ed5b5bd",
+    "search": "",
+    "hash": "",
+    "state": {
+        "contact": {
+            "id": "476a6332-7b79-4c55-bbef-9f5e8ed5b5bd",
+            "name": "John",
+            "email": "john@example.com"
+        }
+    },
+    "key": "p0ngps18"
+}
+```

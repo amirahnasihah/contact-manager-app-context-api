@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
 import AddContact from "./components/AddContact";
 import ListContact from "./components/ListContact";
+import DetailContact from "./components/DetailContact";
 
 function App(props) {
   const LOCAL_STORAGE_KEY = "contacts";
@@ -51,7 +52,6 @@ function App(props) {
       <Header />
       <Routes>
         <Route
-          exact
           path="/"
           {...props}
           element={
@@ -63,6 +63,7 @@ function App(props) {
           {...props}
           element={<AddContact addContactHandler={addContactHandler} />}
         />
+        <Route path="/contact/:id" element={<DetailContact />} />
       </Routes>
       <FooterContact />
     </Grid>
