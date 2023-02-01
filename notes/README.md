@@ -18,9 +18,12 @@
     - [Delete Function Approach 2](#delete-function-approach-2)
     - [Passing Functions Through Multiple Props w/ delete function](#passing-functions-through-multiple-props-w-delete-function)
     - [The onClick Delete Button Passed Correctly](#the-onclick-delete-button-passed-correctly)
-- [React Router](#react-router)
+- [React Router V6](#react-router-v6)
   - [Configuring The Router](#configuring-the-router)
   - [Defining Routes](#defining-routes)
+    - [Add Props to the Component in a Route](#add-props-to-the-component-in-a-route)
+- [React Router V5](#react-router-v5)
+  - [Add Props to the Component in a Route](#add-props-to-the-component-in-a-route-1)
 
 ## Add Function
 
@@ -628,7 +631,7 @@ It's important to **understand the difference between passing a reference to a f
 
 In the **first** code, `() => deleteHandler(id)` creates a new anonymous function that calls `deleteHandler` with `id` as an argument. In the **second** code, `deleteHandler` is passed as a reference and will be executed directly when the `DeleteIcon` is clicked. The third code calls the `deleteHandler` function immediately.
 
-# React Router
+# React Router V6
 
 React Router DOM is a library for routing in React applications. It allows developers to declaratively manage navigation within a React application by mapping components to different URLs. When a URL is matched, React Router DOM renders the associated component, making it easy to create a single-page application with multiple views.
 
@@ -687,4 +690,32 @@ export function App() {
     </Routes>
   )
 }
+```
+
+### Add Props to the Component in a Route
+
+```javascript
+<Route exact path={`/`} {...props} element={<ListContact  contacts={contacts} deleteContact={deleteContact} />} />
+```
+
+This code is using the `Route` component from a library called React Router. Here is a step by step explanation of what is happening:
+
+1. `<Route` - This starts the declaration of a new Route component.
+
+2. `exact path={`/`}` - This sets the `path` property of the `Route` component, which specifies the URL that the component should be displayed for. The `exact` property ensures that this route will only be displayed when the URL exactly matches `/`.
+
+3. `{...props}` - This is a way of **spreading the properties from an object onto a component**. In this case, it means that **any properties passed to the `Route` component (such as `className`, `style`, etc.) will be passed on to the component being rendered by this `Route`**.
+
+4. `element={<ListContact contacts={contacts} deleteContact={deleteContact} />}` - This sets the `element` property of the `Route` component, which is used to specify the component that should be rendered when the URL matches the `path` defined earlier. In this case, it is a component called `ListContact` and it is being passed two props, `contacts` and `deleteContact`.
+
+5. `/> `- This closes the `Route` component declaration.
+
+In summary, this code sets up a new `Route` component that will be displayed when the URL is exactly `/`. The Route component will render the `ListContact` component and pass it two props, `contacts` and `deleteContact`. Additionally, any props passed to the `Route` component will also be passed to the `ListContact` component.
+
+# React Router V5
+
+## Add Props to the Component in a Route
+
+```javascript
+
 ```

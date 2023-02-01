@@ -2,13 +2,13 @@ import "./App.css";
 import { Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Route, Routes, Link, Outlet } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
 import AddContact from "./components/AddContact";
 import ListContact from "./components/ListContact";
 
-function App() {
+function App(props) {
   const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setContacts] = useState(
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
@@ -48,22 +48,25 @@ function App() {
         flexGrow: 1,
       }}
     >
-      <div>
-        <Link to={`add`}>
-          <Button variant="contained">Add Contact</Button>
-        </Link>
-      </div>
-      {/* <Routes> */}
-      {/* <Header /> */}
-      {/* <Route path="/" element={<ListContact />} />
-        <Route path="/add" element={<AddContact />} /> */}
-      {/* <AddContact addContactHandler={addContactHandler} /> */}
-      <ListContact contacts={contacts} deleteContact={deleteContact} />
-      <div id="detail">
-        <Outlet />
-      </div>
+      <Header />
+      <Routes>
+        <Route
+          exact
+          path={`/`}
+          {...props}
+          element={
+            <ListContact contacts={contacts} deleteContact={deleteContact} />
+          }
+        />
+        <Route
+          path={`/add`}
+          {...props}
+          element={<AddContact addContactHandler={addContactHandler} />}
+        />
+      </Routes>
       <FooterContact />
-      {/* </Routes> */}
+      {/* <AddContact addContactHandler={addContactHandler} />
+      <ListContact contacts={contacts} deleteContact={deleteContact} /> */}
     </Grid>
   );
 }

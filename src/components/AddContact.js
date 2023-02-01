@@ -1,6 +1,8 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, IconButton, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../App.css";
+import HomeIcon from "@mui/icons-material/Home";
+import { Link } from "react-router-dom";
 
 const AddContact = ({ addContactHandler }) => {
   const contactForm = {
@@ -68,9 +70,14 @@ const AddContact = ({ addContactHandler }) => {
             m: 1,
           }}
         >
-          <Button variant="contained" type="submit">
-            Add
-          </Button>
+          <Box>
+            <Button variant="contained" type="submit" color="success">
+              Add
+            </Button>
+            <Link to={`/`}>
+              <Button variant="contained">Back</Button>
+            </Link>
+          </Box>
         </Grid>
       </Box>
     </div>
