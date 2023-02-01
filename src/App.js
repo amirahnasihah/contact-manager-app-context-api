@@ -1,8 +1,8 @@
 import "./App.css";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
 import AddContact from "./components/AddContact";
@@ -52,13 +52,15 @@ function App(props) {
       <Routes>
         <Route
           exact
-          path={`/`}
+          path="/"
+          {...props}
           element={
             <ListContact contacts={contacts} deleteContact={deleteContact} />
           }
         />
         <Route
-          path={`/add`}
+          path="/add"
+          {...props}
           element={<AddContact addContactHandler={addContactHandler} />}
         />
       </Routes>

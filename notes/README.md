@@ -23,8 +23,11 @@
   - [Defining Routes](#defining-routes)
     - [Add Props to the Component in a Route](#add-props-to-the-component-in-a-route)
     - [TypeError Cannot read properties of undefined (reading 'map')](#typeerror-cannot-read-properties-of-undefined-reading-map)
-- [React Router V5](#react-router-v5)
-  - [Add Props to the Component in a Route](#add-props-to-the-component-in-a-route-1)
+    - [Link Component React Router DOM](#link-component-react-router-dom)
+      - [Default Exports](#default-exports)
+    - [to="/add" vs to={`/add`}](#toadd-vs-toadd)
+    - [Add Props to the Component in a Route - Alt Ways](#add-props-to-the-component-in-a-route---alt-ways)
+    - [Auto Redirecting After Submitted Form](#auto-redirecting-after-submitted-form)
 
 ## Add Function
 
@@ -746,10 +749,82 @@ The `renderContactList` function is trying to access the `contacts` array, but b
 <Route exact path={`/`} element={<ListContact contacts={contacts} deleteContact={deleteContact} /> />} />
 ```
 
-# React Router V5
+### Link Component React Router DOM
 
-## Add Props to the Component in a Route
+The `Link` component is a way to navigate between different routes in a React application that uses React Router. By importing the `Link` component, you can use it in your code to create links that will change the URL and render a different component when clicked.
+
+#### Default Exports
+
+Why we add curly braces to the Link but not to CardContact and React?
 
 ```javascript
+// 1
+import { Link } from "react-router-dom";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 
+// 2 Default exports
+import CardContact from "./CardContact";
+import React from "react";
+import ReactDOM from "react-dom/client";
 ```
+
+`React` and `ReactDOM` are default exports from the react and react-dom libraries, respectively. In this case, you **don't need to use curly braces `{}` to import them, because they are the default exports** and can be imported using the syntax `import React from "react`" and `import ReactDOM from "react-dom/client"`.
+
+### to="/add" vs to={`/add`}
+
+What's the difference between this two code:
+
+```javascript
+// 1
+<Link to="/add" ></Link>
+
+// 2
+<Link to={`/add`} ></Link>
+```
+
+The difference is only in the syntax of how the `to` prop is passed to the `Link` component.
+
+1. First code `"/add"`: the `to` prop is **passed as a string literal** with a value of `"/add"`.
+
+2. Second code `{`/add`}`: the `to` prop is **passed as a template literal** with a value of `"/add"`.
+
+- The **difference is the use of backticks (``) instead of quotes ("").** The backticks allow for the embedding of expressions within the string, and allow for multi-line strings, while quotes do not.
+- Both of the codes are valid and will produce the same result, it's a matter of personal preference which one you use.
+
+### Add Props to the Component in a Route - Alt Ways
+
+How do we add the props when we actually have a component in the route, how we passing the props in the routed component is?
+
+What's the difference between these three codes and why it's difference?
+
+```javascript
+// First code:
+<Route exact path="/" {...props} element={<ListContact  contacts={contacts} deleteContact={deleteContact} />} />
+
+// Second code:✅
+<Route exact path="/" {...props} component={() => ( <ListContact  contacts={contacts} deleteContact={deleteContact} /> )} />
+
+
+// Third code:
+<Route exact path="/" {...props} component={<ListContact  contacts={contacts} deleteContact={deleteContact} />} />
+
+
+// Fourth code:✅
+<Route exact path="/" render={(props) => ( <ContactList {...props} contacts={contacts} deleteContact={deleteContact} /> )} />;
+```
+
+How do we add the props when we actually have a component in the route and whats the difference between these three codes and why its difference:
+
+1. First code - the component is passed as an element in the `element` prop. This is **not a standard prop in React Router**, so it won't work unless the custom implementation of the `Route` component specifically supports this prop.
+
+2. Second code - the component is passed as an anonymous function in the `component` prop. This function returns a React component, which is passed the `contacts` and `deleteContact` props. The function is executed when the `Route` is matched and its component is rendered. This is a **valid way of rendering a component in a Route.**
+
+3. Third code - the component is passed directly in the component prop. This is also a **valid way of rendering a component in a Route, but it does not pass any props to the component.**
+
+4. Fourth code - the `render` prop is another way to render a component in a `Route` in React Router and is useful when you need more control over the rendering of the component than what the `component` prop provides.
+
+- `{...props}`: spread syntax is used to pass any other props that are passed to the `Route` component to the component being rendered. This allows you to pass additional props to the component without having to list them out individually.
+
+- The **second code is the most flexible**, as it allows you to pass props to the component and is a valid way of rendering a component in a `Route`.
+
+### Auto Redirecting After Submitted Form

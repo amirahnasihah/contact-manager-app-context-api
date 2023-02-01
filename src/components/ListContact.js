@@ -1,9 +1,7 @@
 import React from "react";
 import "../App.css";
 import CardContact from "./CardContact";
-
 import { Button } from "@mui/material";
-
 import { Link } from "react-router-dom";
 
 const ListContact = ({ contacts, deleteContact }) => {
