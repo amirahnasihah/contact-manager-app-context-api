@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, ButtonGroup, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -71,14 +71,18 @@ const AddContact = ({ addContactHandler }) => {
             m: 1,
           }}
         >
-          <Box>
-            <Button variant="contained" type="submit" color="success">
+          <ButtonGroup
+            variant="contained"
+            aria-label="outlined primary button group"
+            sx={{ gap: 2 }}
+          >
+            <Button type="submit" color="success">
               Add
             </Button>
             <Link to={`/`} className="link-btn">
-              <Button variant="contained">Back</Button>
+              <Button>Back</Button>
             </Link>
-          </Box>
+          </ButtonGroup>
         </Grid>
       </Box>
     </div>
