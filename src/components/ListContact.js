@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useRef } from "react";
 import "../App.css";
 import CardContact from "./CardContact";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const ListContact = ({ contacts, deleteContact, handleSearch, searchTerm }) => {
+const ListContact = ({ contacts, deleteContact, searchTerm, handleSearch }) => {
+  // console.log("ListContact props:", { contacts, deleteContact, searchTerm, handleSearch });
+
+  const inputElement = useRef("");
+
   const deleteHandler = (id) => {
     // to getContactId
     // console.log("deleteHandler", id);
@@ -29,6 +33,11 @@ const ListContact = ({ contacts, deleteContact, handleSearch, searchTerm }) => {
     );
   });
 
+  const getSearchTerm = () => {
+    // console.log("getSearchTerm", inputElement.current.value);
+    handleSearch(inputElement.current.value);
+  };
+
   return (
     <div>
       <h2 className="App">List of My Contact</h2>
@@ -38,13 +47,18 @@ const ListContact = ({ contacts, deleteContact, handleSearch, searchTerm }) => {
       <div className="App">
         <label>👉</label>
         <input
+          ref={inputElement}
           type="text"
           placeholder="search contact..."
           value={searchTerm}
-          onChange={handleSearch}
+          onChange={getSearchTerm}
         />
       </div>
-      <div> {renderContactList} </div>
+      <div>
+        {renderContactList.length > 0
+          ? renderContactList
+          : "No Contacts Available"}
+      </div>
     </div>
   );
 };

@@ -17,8 +17,9 @@ function App(props) {
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
   );
   const [searchTerm, setSearchTerm] = useState(" ");
+  const [searchResults, setSearchResults] = useState([]);
 
-  // Get Contacts Data
+  // GET DATA Contacts
   const retrieveContacts = async () => {
     const response = await api.get("/contacts");
     return response.data;
@@ -59,6 +60,7 @@ function App(props) {
     const newContacts = contacts.filter((contact) => {
       return contact.id !== id;
     });
+
     setContacts(newContacts);
   };
 
@@ -80,8 +82,22 @@ function App(props) {
     // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   }, [contacts]);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+  // SEARCH FUNCTION
+  const handleSearch = (searchTerm) => {
+    // console.log("handleSearch", searchTerm);
+    setSearchTerm(searchTerm);
+    if (searchTerm !== "") {
+      const newContactList = contacts.filter((contact) => {
+        // console.log(Object.values(contact.join("")));
+        return Object.values(contact)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newContactList);
+    } else {
+      setSearchResults(contacts);
+    }
   };
 
   return (
@@ -100,7 +116,7 @@ function App(props) {
           {...props}
           element={
             <ListContact
-              contacts={contacts}
+              contacts={searchTerm.length < 1 ? contacts : searchResults}
               deleteContact={deleteContact}
               searchTerm={searchTerm}
               handleSearch={handleSearch}

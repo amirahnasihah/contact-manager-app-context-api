@@ -46,6 +46,10 @@
 - [React Search Filter Component](#react-search-filter-component)
     - [simple-lifting-up-state-search-bar-case-insensitive](#simple-lifting-up-state-search-bar-case-insensitive)
     - [Search Function w/ `useRef()`](#search-function-w-useref)
+      - [join + toLowerCase + includes || code explain](#join--tolowercase--includes--code-explain)
+      - [ternary operator for kids](#ternary-operator-for-kids)
+      - [switch case for kids](#switch-case-for-kids)
+      - [DEBUGGING W/ CONSOLE W/ useRef](#debugging-w-console-w-useref)
 
 ## Add Function
 
@@ -1302,9 +1306,11 @@ import React, { useState } from "react";
 
 const SearchFunction = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
+
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
+
   const filteredData = props.data.filter((item) => {
     return item.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
@@ -1330,3 +1336,167 @@ export default SearchFunction;
 > multiple approaches to do search functionality💩
 
 ### Search Function w/ `useRef()`
+
+> changed the var name of props: searchTerm -> `term` || handleSearch -> `searchKeyword`
+
+**App.js**
+
+```javascript
+// App.js
+import { useState } from "react";
+
+const [searchTerm, setSearchTerm] = useState(" ");
+const [searchResults, setSearchResults] = useState([]);
+
+const handleSearch = (searchTerm) => {
+  // console.log("handleSearch", searchTerm);
+
+  setSearchTerm(searchTerm);
+  if (searchTerm !== "") {
+    const newContactList = contacts.filter((contact) => {
+      console.log(Object.values(contact));
+      return Object.values(contact).join(" ").toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setSearchResults(newContactList);
+  } else {
+    setSearchResults(contacts);
+  }
+};
+
+<Route
+  path="/"
+  {...props}
+  element={
+    <ListContact
+      contacts={searchTerm.length < 1 ? contacts : searchResults}
+      deleteContact={deleteContact}
+      term={searchTerm}
+      searchKeyword={handleSearch}
+    />
+  }
+/>;
+```
+
+This is a JavaScript function that is used to handle a search action in a React component. Here's a step-by-step explanation of what it does:
+
+1. It takes an argument `searchTerm` which is the text entered in the search input field.
+
+2. It calls the `setSearchTerm` function to update the `searchTerm` state with the new value passed in as an argument.
+
+3. If `searchTerm` is not an empty string, the function creates a new array of contacts called `newContactList`. It filters the `contacts` array and only includes the contacts whose values, when joined together into a single string, contain the search term after both the contact and search term have been converted to lowercase.
+
+4. The filtered `newContactList` is then passed as an argument to the `setSearchResults` function, which updates the `searchResults` state with the new list of contacts.
+
+5. If `searchTerm` is an empty string, the function sets `searchResults` to the original `contacts` array by calling the `setSearchResults` function with `contacts` as an argument.
+
+----
+
+1. `searchTerm` which is a string that holds the value of the search input.
+
+2. `handleSearch` which is a function that updates the value of the `searchTerm` whenever the user types something in the search input.
+
+3. `console.log(Object.values(contact));`: each of our `contact` is a javascript object so if go to a Network tab -> contacts -> Preview tab -> make a search only on the values of these object like `contact.name/contact.email`
+
+#### join + toLowerCase + includes || code explain
+
+**`return Object.values(contact).join(" ").toLowerCase().includes(searchTerm.toLowerCase());`**
+
+This code is used to perform a search operation in an object. It converts the values of the `contact` object into a single string and makes it all lowercase. Then it checks if the `searchTerm` exists within this string by converting `searchTerm` to lowercase as well and checking if it exists in the string.
+
+1. `Object.values(contact)` - This line retrieves the values of all properties in the `contact` object and returns them as an array.
+
+2. `.join(" ")` - This line takes the array of values and converts them into a single string separated by spaces.
+
+3. `.toLowerCase()` - This line converts the whole string to lowercase letters.
+
+4. `.includes(searchTerm.toLowerCase())` - This line checks if the `searchTerm` exists within the string created in the previous steps. It makes `searchTerm` lowercase and checks if it exists in the string. This line checks if the lowercase `searchTerm` can be found within the lowercase string of the `contact` object values.
+
+5. The `return` statement returns the result of the includes method, which is a boolean value (true if the searchTerm is found, and false otherwise).
+
+The final result of this code is a boolean value indicating whether `searchTerm` exists within the values of the `contact` object.
+
+----
+need to apply this search results in our contact list
+
+**`contacts={searchTerm.length < 1 ? contacts : searchResults}`**
+
+This line of code sets the `contacts` prop to be either `contacts` or `searchResults`, depending on the length of `searchTerm`.
+
+1. If the **length of `searchTerm` is less than `1`, it means that the search input is empty**, so the contacts prop should be set to the original `contacts` list.
+
+2. If the length of `searchTerm` is greater than or equal to 1, it means that the user has entered a search term, so the `contacts` prop should be set to the filtered `searchResults` list.
+
+This line of code is using a conditional (ternary) operator to determine which value to assign to the `contacts` prop based on the length of `searchTerm`.
+
+#### ternary operator for kids
+
+A ternary operator is a short way of writing an if-else statement in JavaScript. It allows you to make a simple decision in one line of code, instead of using a longer if-else block.
+
+```javascript
+const lunch = (weather === "sunny") ? "sandwich" : "soup";
+```
+
+1. `"?"` symbol: acts as the `"if"` part of the statement. Everything before the `"?"` is the condition that is being checked. In this case, it's whether the weather is `"sunny"` or not.
+2. `":"` symbol: acts as the `"else"` part of the statement. Everything after the `":"` is what will be returned if the condition before the `"?"` is `false`.
+
+So, in this example, **if the weather is sunny, the value of the "lunch" variable will be "sandwich".** If the weather is not sunny, the value will be "soup".
+
+#### switch case for kids
+
+
+
+----
+**ContactList.js**
+
+**useRef() for search function**
+
+```javascript
+// ContactList.js
+import React, { useRef } from "react";
+
+const ListContact = ({ contacts, deleteContact, term, searchKeyword }) => {
+  // debugging so can make use of these props in ContactList.js
+  console.log({ contacts, deleteContact, term, searchKeyword });
+
+  const inputElement = useRef("");
+
+  const getSearchTerm = () => {
+    console.log( "getSearchTerm", inputElement);
+    
+  };
+
+
+  // return
+  <div className="App">
+  <label>👉</label>
+    <input
+      ref={inputElement}
+      type="text"
+      placeholder="search contact..."
+      value={term}
+      onChange={searchKeyword} // or e.target.value
+    />
+  </div>;
+   <div>
+        {renderContactList.length > 0 ? renderContactList  : "No Contacts Available"}
+    </div>
+  }
+```
+
+- Bind the `useRef` hook with the input tag
+- Need to pass whatever we are typing in the search bar to the App.js
+
+
+
+
+#### DEBUGGING W/ CONSOLE W/ useRef
+
+1. `console.log("getSearchTerm", inputElement);`: will get this on the console -> "getSearchTerm {current: input}"
+
+2. `console.log("getSearchTerm", inputElement.current.value);`: typing a,b,c in search bar get this -> "getSearchTerm  a getSearchTerm  a getSearchTerm  b getSearchTerm  c"
+
+3. `console.log("handleSearch", searchTerm);`: passing whatever we are typing in the search bar to the App.js will get this on the console -> "handleSearch a handleSearch  a handleSearch  b handleSearch  c"
+
+4. `console.log(Object.values(contact));`: typing anything in search bar will get this `Object.values`, only the values not the key of the Object.
+
+5. `console.log(Object.values(contact.join(" ")));`: 
