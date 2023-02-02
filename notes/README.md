@@ -34,6 +34,16 @@
     - [Link vs useNavigate()](#link-vs-usenavigate)
     - [Updating the contact details (Important)](#updating-the-contact-details-important)
       - [state property](#state-property)
+- [Delete Route Assignment🍎](#delete-route-assignment)
+- [React AXIOS CRUD w/ JSON-server](#react-axios-crud-w-json-server)
+    - [Setting up JSON server](#setting-up-json-server)
+    - [Make Changes so that we can fetch the data from the json server and not from local storage](#make-changes-so-that-we-can-fetch-the-data-from-the-json-server-and-not-from-local-storage)
+    - [Fetch All Contacts from the server](#fetch-all-contacts-from-the-server)
+      - [Add Contact to API](#add-contact-to-api)
+      - [Delete Contact from API](#delete-contact-from-api)
+      - [Edit Contact from API](#edit-contact-from-api)
+      - [map](#map)
+- [React Search Filter Component](#react-search-filter-component)
 
 ## Add Function
 
@@ -1075,3 +1085,204 @@ const DetailContact = ({ contact }) => {
     "key": "p0ngps18"
 }
 ```
+
+# Delete Route Assignment🍎
+
+When you click on the delete you should actually go to a new page which should be slash delete and there you can show a message that are you sure you want to delete a page okay or no if you click on the ok then the contact should get deleted because delete functionality is already working you just need to move that piece and take it to the new page when you click on the ok you should be able to delete it and you should be able to get back to the contact list page.
+
+# React AXIOS CRUD w/ JSON-server
+
+### Setting up JSON server
+
+1. create a new folder: server-api
+
+2. go to server-api folder -> open in integrated terminal -> type `npm init --yes` to create the `package.json` file
+
+2. Go here: [json-server](https://www.npmjs.com/package/json-server)
+
+3. Follow the instructions:
+- - Install JSON Server `npm install -g json-server` (for global), for under the server-api folder `npm install --save json-server`
+
+4. Create a file called `db.json` under the server-api folder. Inside the `db.json` file, we create our resource which will be a JSON object.
+
+```json
+// db.js
+{
+    "contacts": [
+        
+    ]
+}
+
+// after pasting the local storage:
+{
+  "contacts": [
+    {
+      "id": "476a6332-7b79-4c55-bbef-9f5e8ed5b5bd",
+      "name": "John",
+      "email": "john@example.com"
+    },
+    {
+      "id": "2c40e4f8-24bc-484d-8a39-483e210e1568",
+      "name": "Jane",
+      "email": "jane@example.com"
+    }
+  ]
+}
+```
+
+5. Go to `package.json` file, under server-api folder -> go to `"scripts": {...}` -> remove the following: `"test": "echo \"Error: no test specified\" && exit 1"` -> update with this: `"start": "json-server -p 3006 -w db.json"`
+
+6. Open the intergrated terminal under server-api folder -> type: `npm start`
+
+7. go to any of this:
+
+```bash
+Resources
+http://localhost:3006/contacts
+
+Home
+http://localhost:3006
+```
+
+### Make Changes so that we can fetch the data from the json server and not from local storage
+
+1. Install AXIOS under the React app folder
+2. Create a new folder named `api`. Inside, create a new file named `contacts.js`.
+3. Go to the `contacts.js` file, put it like this:
+
+```javascript
+import axios from "axios";
+
+export default axios.create({
+  baseURL: "http://localhost:3006/",
+});
+```
+
+4. Axios is installed so now we can make changes in our React app
+
+### Fetch All Contacts from the server
+
+`App.js` is the code where we actually retrieve our data from the local storage.
+
+```javascript
+// 1️⃣App.js
+import api from "./api/contacts";
+
+// 2️⃣Get Contacts
+const retrieveContacts = async () => {
+  const response = await api.get("/contacts");
+  return response.data;
+};
+
+// 3️⃣
+useEffect(() => {
+  // const retrieveContacts = JSON.parse(
+  //   localStorage.getItem(LOCAL_STORAGE_KEY)
+  // );
+  // if (retrieveContacts) setContacts(retrieveContacts);
+
+  // get data from server api
+  const getAllContacts = async () => {
+    const allContacts = await retrieveContacts();
+    if (allContacts) setContacts(allContacts);
+  };
+
+  getAllContacts();
+}, []);
+
+
+// 4️⃣for local storage
+// commented out if want to remove from Local Storage
+useEffect(() => {
+  // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
+}, [contacts]);
+```
+
+#### Add Contact to API
+
+this response.data will be the new state
+
+```javascript
+const addContactHandler = async (contact) => {
+  console.log("addContactHandler", contact);
+  const request = {
+    id: uuidv4(),
+    ...contact,
+  };
+
+  const response = await api.post("/contacts", request);
+  console.log(response);
+  // setContacts([...contacts, { id: uuidv4(), ...contact }]);
+  setContacts([...contacts, response.data]);
+};
+```
+
+#### Delete Contact from API
+
+```javascript
+const deleteContact = async (id) => {
+  await api.delete(`/contacts/${id}`);
+  const newContacts = contacts.filter((contact) => {
+    return contact.id !== id;
+  });
+  setContacts(newContacts);
+};
+```
+
+#### Edit Contact from API
+
+The edit will be very similar to the add contact
+
+```javascript
+const updateContactHandler = async (contact) => {
+  console.log("updateContactHandler", contact);
+
+  const response = await api.put(`/contacts/${contact.id}`, contact);
+  console.log(response.data);
+  const { id } = response.data;
+  setContacts(
+    contacts.map((contact) => {
+      return contact.id === id ? { ...response.data } : contact;
+    })
+  );
+};
+```
+
+This is a function for updating a contact in the application's data. It does the following things, step by step:
+
+1. Logs the contact information that is being updated, to the console.
+
+2. Sends a PUT request to the server, with the URL `/contacts/${contact.id}` and the updated contact information. The server should update the corresponding contact in its database, and respond with the updated contact information.
+
+3. Logs the response data from the server, to the console.
+
+4. Destructures the response data, and assigns the `id` property of the response data to a variable with the same name.
+
+5. Calls the `setContacts` function, which updates the application's state to contain the new contact information. The argument passed to `setContacts` is a new array of contacts, where the updated contact information is merged with the old contact information. The new array is created by calling `contacts.map` and passing a callback function as argument. The callback function takes a single argument `contact`, and returns one of two things:
+- If `contact.id` is equal to the id that was extracted from the response data, it returns a new object with the spread operator `{ ...response.data }`. This is the updated contact information from the server.
+- If `contact.id` is not equal to the extracted id, it returns the original `contact` object. This means that all other contacts are unchanged.
+
+If want to manipulate the data in the array you can actually use a map function:
+
+```javascript
+setContacts(
+    contacts.map((contact) => {
+      return contact.id === id ? { ...response.data } : contact;
+    })
+```
+
+#### map
+
+For each contact in the current contacts state, this will return a new object based on the following condition:
+
+```javascript
+return contact.id === id ? { ...response.data } : contact;
+```
+
+- If the id of the current contact matches the id destructured from the response.data, then it returns a new object which is a spread of the updated data received from the server.
+
+- If the id of the current contact does not match, then it returns the current contact object as it is.
+
+This mapping of the current contacts state will result in a new array of contacts with the updated contact. This new array is then passed to setContacts, which updates the contacts state with the new array.
+
+# React Search Filter Component

@@ -1,0 +1,97 @@
+import { Box, Button, ButtonGroup, Grid, TextField } from "@mui/material";
+import React, { useState } from "react";
+import "../App.css";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+const EditContact = ({ contact, updateContactHandler }) => {
+  const location = useLocation();
+  const { id, name, email } = location.state.contact;
+  const newDetail = {
+    // id: id,
+    // name: name,
+    // email: email,
+
+    name,
+    email,
+  };
+
+  const [addContactForm, setAddContactForm] = useState(newDetail);
+  const navigate = useNavigate();
+
+  const update = (e) => {
+    e.preventDefault();
+    if (addContactForm.name === "" || addContactForm.email === "") {
+      alert("All the fields are required");
+      return;
+    }
+    updateContactHandler({ id, ...addContactForm });
+    setAddContactForm({ name: "", email: "" });
+    navigate(-1);
+  };
+
+  return (
+    <div className="App">
+      <h2>Edit Contact Form</h2>
+
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+        }}
+        autoComplete="off"
+        onSubmit={update}
+      >
+        <div>
+          <TextField
+            required
+            id="name"
+            label="Name"
+            type="text"
+            value={addContactForm.name}
+            onChange={(e) =>
+              setAddContactForm({ ...addContactForm, name: e.target.value })
+            }
+          />
+        </div>
+        <div>
+          <TextField
+            id="email"
+            label="Email Address"
+            type="email"
+            value={addContactForm.email}
+            onChange={(e) =>
+              setAddContactForm({ ...addContactForm, email: e.target.value })
+            }
+          />
+        </div>
+
+        <Button variant="outlined" component="label">
+          Upload Image
+          <input hidden accept="image/*" multiple type="file" />
+        </Button>
+
+        <Grid
+          item
+          sx={{
+            m: 1,
+          }}
+        >
+          <ButtonGroup
+            variant="contained"
+            aria-label="outlined primary button group"
+            sx={{ gap: 2 }}
+          >
+            <Button type="submit" color="secondary">
+              Edit
+            </Button>
+            <Link to={`/`} className="link-btn">
+              <Button>Back</Button>
+            </Link>
+          </ButtonGroup>
+        </Grid>
+      </Box>
+    </div>
+  );
+};
+
+export default EditContact;

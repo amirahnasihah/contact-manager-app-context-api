@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import "../App.css";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import React from "react";
 import user from "../images/user.png";
 import { Link } from "react-router-dom";
@@ -50,12 +51,21 @@ const CardContact = ({ contact, deleteHandler }) => {
 
         <CardActions disableSpacing>
           <IconButton
-            aria-label="add to favorites"
+            aria-label="DELETE"
             sx={{ color: "red" }}
             onClick={() => deleteHandler(id)}
           >
             <DeleteIcon />
           </IconButton>
+          <Link
+            to={{ pathname: `/edit` }}
+            state={{ contact: contact }}
+            className="link-btn"
+          >
+            <IconButton aria-label="EDIT" sx={{ color: "blue" }}>
+              <EditIcon />
+            </IconButton>
+          </Link>
         </CardActions>
       </Card>
     </Grid>

@@ -1,0 +1,24 @@
+{
+  "contacts": [
+    {
+      "id": "d1db2720-70ee-4107-b49d-b06ac8cf9586",
+      "name": "one two",
+      "email": "one@e.c"
+    },
+    {
+      "id": "3bc4ef78-261b-46b9-954d-f18149c6b1c8",
+      "name": "five",
+      "email": "five@example.com"
+    },
+    {
+      "id": "b1a0f5c9-fe9a-4b49-983b-92043e974133",
+      "name": "six",
+      "email": "six@g.g"
+    },
+    {
+      "id": "b2a07f4e-8d02-4f9a-88b5-b699b5f96ef9",
+      "name": "Hello",
+      "email": "hello@example.com"
+    }
+  ]
+}
