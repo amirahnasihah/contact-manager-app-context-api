@@ -27,7 +27,7 @@ const CardContact = ({ contact, deleteHandler }) => {
           sx={{ width: 90 }}
           title="Image Title"
           image={user}
-          alt="Random Image from unsplash"
+          alt="Contact Image"
         />
 
         <Link
@@ -49,7 +49,10 @@ const CardContact = ({ contact, deleteHandler }) => {
           </CardContent>
         </Link>
 
-        <CardActions disableSpacing>
+        <CardActions
+          disableSpacing
+          sx={{ justifyContent: "flex-end", width: "100%" }}
+        >
           <IconButton
             aria-label="DELETE"
             sx={{ color: "red" }}

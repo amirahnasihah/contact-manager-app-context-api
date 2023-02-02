@@ -16,8 +16,9 @@ function App(props) {
   const [contacts, setContacts] = useState(
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
   );
+  const [searchTerm, setSearchTerm] = useState(" ");
 
-  // Get Contacts
+  // Get Contacts Data
   const retrieveContacts = async () => {
     const response = await api.get("/contacts");
     return response.data;
@@ -79,10 +80,14 @@ function App(props) {
     // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   }, [contacts]);
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <Grid
       sx={{
-        p: 2,
+        p: 1,
         margin: "auto",
         maxWidth: 1000,
         flexGrow: 1,
@@ -94,7 +99,12 @@ function App(props) {
           path="/"
           {...props}
           element={
-            <ListContact contacts={contacts} deleteContact={deleteContact} />
+            <ListContact
+              contacts={contacts}
+              deleteContact={deleteContact}
+              searchTerm={searchTerm}
+              handleSearch={handleSearch}
+            />
           }
         />
         <Route

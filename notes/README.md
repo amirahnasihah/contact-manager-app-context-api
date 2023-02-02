@@ -44,6 +44,8 @@
       - [Edit Contact from API](#edit-contact-from-api)
       - [map](#map)
 - [React Search Filter Component](#react-search-filter-component)
+    - [simple-lifting-up-state-search-bar-case-insensitive](#simple-lifting-up-state-search-bar-case-insensitive)
+    - [Search Function w/ `useRef()`](#search-function-w-useref)
 
 ## Add Function
 
@@ -1286,3 +1288,45 @@ return contact.id === id ? { ...response.data } : contact;
 This mapping of the current contacts state will result in a new array of contacts with the updated contact. This new array is then passed to setContacts, which updates the contacts state with the new array.
 
 # React Search Filter Component
+
+To create a search function in a React functional component, you need the following:
+
+1. A state to hold the input value of the search term
+2. An input field for the user to enter the search term
+3. An event handler to update the state with the input value
+4. A function to filter the data based on the search term
+5. A way to render the filtered data
+
+```javascript
+import React, { useState } from "react";
+
+const SearchFunction = (props) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+  const filteredData = props.data.filter((item) => {
+    return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  return (
+    <div>
+      <input type="text" value={searchTerm} onChange={handleChange} />
+      {filteredData.map((item) => (
+        <div key={item.id}>
+          <h4>{item.name}</h4>
+          <p>{item.email}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default SearchFunction;
+```
+
+### simple-lifting-up-state-search-bar-case-insensitive
+
+> multiple approaches to do search functionality💩
+
+### Search Function w/ `useRef()`

@@ -3,10 +3,8 @@ import "../App.css";
 import CardContact from "./CardContact";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
-import { Search } from "@mui/icons-material";
 
-const ListContact = ({ contacts, deleteContact }) => {
+const ListContact = ({ contacts, deleteContact, handleSearch, searchTerm }) => {
   const deleteHandler = (id) => {
     // to getContactId
     // console.log("deleteHandler", id);
@@ -39,7 +37,12 @@ const ListContact = ({ contacts, deleteContact }) => {
       </Link>
       <div className="App">
         <label>👉</label>
-        <input type="text" placeholder="search..." />
+        <input
+          type="text"
+          placeholder="search contact..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
       </div>
       <div> {renderContactList} </div>
     </div>
