@@ -36,7 +36,7 @@
       - [state property](#state-property)
 - [Delete Route Assignment🍎](#delete-route-assignment)
 - [React AXIOS CRUD w/ JSON-server](#react-axios-crud-w-json-server)
-    - [Setting up JSON server](#setting-up-json-server)
+    - [Setting up JSON server API](#setting-up-json-server-api)
     - [Make Changes so that we can fetch the data from the json server and not from local storage](#make-changes-so-that-we-can-fetch-the-data-from-the-json-server-and-not-from-local-storage)
     - [Fetch All Contacts from the server](#fetch-all-contacts-from-the-server)
       - [Add Contact to API](#add-contact-to-api)
@@ -1098,7 +1098,7 @@ When you click on the delete you should actually go to a new page which should b
 
 # React AXIOS CRUD w/ JSON-server
 
-### Setting up JSON server
+### Setting up JSON server API
 
 1. create a new folder: server-api
 

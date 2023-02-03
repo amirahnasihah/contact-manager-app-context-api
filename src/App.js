@@ -16,7 +16,7 @@ function App(props) {
   const [contacts, setContacts] = useState(
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
   );
-  const [searchTerm, setSearchTerm] = useState(" ");
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   // GET DATA Contacts
@@ -90,7 +90,7 @@ function App(props) {
       const newContactList = contacts.filter((contact) => {
         // console.log(Object.values(contact.join("")));
         return Object.values(contact)
-          .join(" ")
+          .join("")
           .toLowerCase()
           .includes(searchTerm.toLowerCase());
       });
