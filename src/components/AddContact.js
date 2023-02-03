@@ -2,15 +2,16 @@ import { Box, Button, ButtonGroup, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useContactsCrud } from "../context/contacts-crud-context";
 
-const AddContact = ({ addContactHandler }) => {
+const AddContact = () => {
   const contactForm = {
     name: "",
     email: "",
   };
-
   const [addContactForm, setAddContactForm] = useState(contactForm);
   const navigate = useNavigate();
+  const { addContactHandler } = useContactsCrud();
 
   // addContactHandler to submit the form and setAddContactForm clear the form
   const add = (e) => {
