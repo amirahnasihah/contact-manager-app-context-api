@@ -1,36 +1,29 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import "../App.css";
 import CardContact from "./CardContact";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useContactsCrud } from "../context/contacts-crud-context";
 
-const ListContact = ({ contacts, deleteContact, searchTerm, handleSearch }) => {
+const ListContact = () => {
   // console.log("ListContact props:", { contacts, deleteContact, searchTerm, handleSearch });
-
+  const {
+    contacts,
+    retrieveContacts,
+    handleSearch,
+    searchTerm,
+    searchResults,
+  } = useContactsCrud();
   const inputElement = useRef("");
 
-  const deleteHandler = (id) => {
-    // to getContactId
-    // console.log("deleteHandler", id);
-    deleteContact(id);
-  };
+  useEffect(() => {
+    retrieveContacts();
+  }, [retrieveContacts]);
 
-  // const contacts = [
-  //   {
-  //     id: 1,
-  //     name: "John",
-  //     email: "john@gmail.com",
-  //   },
-  // ];
-
-  const renderContactList = contacts.map((contact) => {
-    return (
-      <CardContact
-        contact={contact}
-        key={contact.id}
-        deleteHandler={deleteHandler}
-      />
-    );
+  const renderContactList = (
+    searchTerm.length < 1 ? contacts : searchResults
+  ).map((contact) => {
+    return <CardContact contact={contact} key={contact.id} />;
   });
 
   const getSearchTerm = () => {
