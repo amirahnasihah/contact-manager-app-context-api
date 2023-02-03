@@ -1499,4 +1499,6 @@ const ListContact = ({ contacts, deleteContact, term, searchKeyword }) => {
 
 4. `console.log(Object.values(contact));`: typing anything in search bar will get this `Object.values`, only the values not the key of the Object.
 
-5. `console.log(Object.values(contact.join(" ")));`: 
+5. `console.log(Object.values(contact.join("")));`:
+
+> a space in front on search bar -> to resolve this issue, set the initial value of the searchTerm to an empty string, `""` or use `join("")` w/o the space in between.
