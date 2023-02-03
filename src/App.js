@@ -1,8 +1,5 @@
 import "./App.css";
 import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
-import api from "./api/contacts";
-
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import FooterContact from "./components/FooterContact";
