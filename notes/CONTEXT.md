@@ -257,3 +257,5 @@ const onUserSearch = (e) => {
   onChange={(e) => onUserSearch(e)}
 />;
 ```
+
+### Update Context
