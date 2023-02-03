@@ -18,6 +18,7 @@ const FooterContact = () => {
           alt="github repo link"
           target="_blank"
           rel="noreferrer"
+          sx={{ color: "white" }}
         >
           {"GitHub Repo"}
         </Link>
