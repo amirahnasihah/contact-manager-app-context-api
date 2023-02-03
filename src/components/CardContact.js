@@ -15,9 +15,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import React from "react";
 import user from "../images/user.png";
 import { Link } from "react-router-dom";
+import { useContactsCrud } from "../context/contacts-crud-context";
 
-const CardContact = ({ contact, deleteHandler }) => {
+const CardContact = ({ contact }) => {
   const { id, name, email } = contact;
+  const { deleteContact } = useContactsCrud();
+
+  const deleteContactHandler = (id) => {
+    deleteContact(id);
+  };
 
   return (
     <Grid sx={{ p: 1 }}>
@@ -51,12 +57,12 @@ const CardContact = ({ contact, deleteHandler }) => {
 
         <CardActions
           disableSpacing
-          sx={{ justifyContent: "flex-end", width: "100%" }}
+          // sx={{ justifyContent: "flex-end", width: "100%" }}
         >
           <IconButton
             aria-label="DELETE"
             sx={{ color: "red" }}
-            onClick={() => deleteHandler(id)}
+            onClick={() => deleteContactHandler(id)}
           >
             <DeleteIcon />
           </IconButton>
