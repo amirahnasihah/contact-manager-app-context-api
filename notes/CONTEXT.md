@@ -1,5 +1,19 @@
 # React Router DOM Version 6
 
+- [React Router DOM Version 6](#react-router-dom-version-6)
+  - [Upgrade to version 6](#upgrade-to-version-6)
+- [Context API](#context-api)
+  - [Basic Setup Context API for Contact Manager App](#basic-setup-context-api-for-contact-manager-app)
+    - [createContext()](#createcontext)
+    - [Access the value of the context provider w/ `useContext()`](#access-the-value-of-the-context-provider-w-usecontext)
+      - [useContext](#usecontext)
+  - [Basic Setup Extra Context API](#basic-setup-extra-context-api)
+  - [Code Refactoring](#code-refactoring)
+    - [Retrieve Get Contact Data w/ context](#retrieve-get-contact-data-w-context)
+    - [ListContacts -\> useContactsCrud](#listcontacts---usecontactscrud)
+    - [Delete Context](#delete-context)
+    - [Search Context](#search-context)
+
 ## Upgrade to version 6
 
 1. Open `package.json` -> type the version number -> open terminal: `npm install`
