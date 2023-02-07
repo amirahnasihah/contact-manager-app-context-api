@@ -36,7 +36,7 @@ import { createContext } from "react";
 
 const contactsCrudContext = createContext();
 
-export function contactsCrudContextProvider({ children }) {
+export function ContactsCrudContextProvider({ children }) {
   const value = {};
 
   return (
@@ -151,7 +151,7 @@ import { createContext, useContext } from "react";
 
 const contactsCrudContext = createContext();
 
-export function contactsCrudContextProvider({ children }) {
+export function ContactsCrudContextProvider({ children }) {
   const value = {};
 
   return (
