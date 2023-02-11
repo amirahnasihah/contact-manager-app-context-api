@@ -1500,3 +1500,18 @@ const ListContact = ({ contacts, deleteContact, term, searchKeyword }) => {
 5. `console.log(Object.values(contact.join("")));`:
 
 > a space in front on search bar -> to resolve this issue, set the initial value of the searchTerm to an empty string, `""` or use `join("")`  the space in between.
+
+## UUID Installation
+
+1. Install
+
+```bash
+npm install uuid
+```
+
+2. Create a UUID (ES6 module syntax)
+
+```javascript
+import { v4 as uuidv4 } from 'uuid';
+uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
+```
