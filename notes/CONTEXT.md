@@ -13,6 +13,7 @@
     - [ListContacts -\> useContactsCrud](#listcontacts---usecontactscrud)
     - [Delete Context](#delete-context)
     - [Search Context](#search-context)
+- [AXIOS CRUD w/ JSON Server](#axios-crud-w-json-server)
 
 ## Upgrade to version 6
 
@@ -271,3 +272,14 @@ const onUserSearch = (e) => {
   onChange={(e) => onUserSearch(e)}
 />;
 ```
+
+# AXIOS CRUD w/ JSON Server
+
+|Method |URL |Payload |Response | Description|
+|-------|-----|-------|---------|-----------|
+| GET | /tasks | | Task[] | Get a list of tasks|
+| GET | /tasks | | Task | Get a task by ID |
+| POST | /tasks | Task | Task | Create a new task |
+| PUT | /tasks/{taskId} | Task | Task | Update a task |
+| Patch | /tasks/{taskId} | Task | Task | Update a task |
+| Delete | /tasks/{taskId} |  | Task | Delete a task |
