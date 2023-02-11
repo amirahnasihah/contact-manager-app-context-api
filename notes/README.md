@@ -1443,8 +1443,6 @@ So, in this example, **if the weather is sunny, the value of the "lunch" variabl
 
 #### switch case for kids
 
-
-
 ----
 **ContactList.js**
 
@@ -1501,4 +1499,4 @@ const ListContact = ({ contacts, deleteContact, term, searchKeyword }) => {
 
 5. `console.log(Object.values(contact.join("")));`:
 
-> a space in front on search bar -> to resolve this issue, set the initial value of the searchTerm to an empty string, `""` or use `join("")` w/o the space in between.
+> a space in front on search bar -> to resolve this issue, set the initial value of the searchTerm to an empty string, `""` or use `join("")`  the space in between.

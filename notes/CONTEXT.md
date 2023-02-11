@@ -13,6 +13,7 @@
     - [ListContacts -\> useContactsCrud](#listcontacts---usecontactscrud)
     - [Delete Context](#delete-context)
     - [Search Context](#search-context)
+- [Axios CRUD w/ JSON Server](#axios-crud-w-json-server)
 
 ## Upgrade to version 6
 
@@ -271,3 +272,16 @@ const onUserSearch = (e) => {
   onChange={(e) => onUserSearch(e)}
 />;
 ```
+
+# Axios CRUD w/ JSON Server
+
+A resource refers to a specific data entity that can be accessed and manipulated through the API. For our Todo app, let's call it tasks. Add title, and completed fields under Resource schema. The following endpoints will be generated:
+
+|Method |URL |Payload |Response | Description|
+|-------|-----|-------|---------|-----------|
+| GET | /tasks | | Task[] | Get a list of tasks|
+| GET | /tasks | | Task | Get a task by ID |
+| POST | /tasks | Task | Task | Create a new task |
+| PUT | /tasks/{taskId} | Task | Task | Update a task |
+| Patch | /tasks/{taskId} | Task | Task | Update a task |
+| Delete | /tasks/{taskId} |  | Task | Delete a task |
