@@ -51,6 +51,28 @@
       - [switch case for kids](#switch-case-for-kids)
       - [DEBUGGING W/ CONSOLE W/ useRef](#debugging-w-console-w-useref)
 
+# Basic Setup Context API
+
+```javascript
+import { createContext, useContext } from "react";
+
+const itemsCrudContext = createContext();
+
+export function ItemsCrudContextProvider({ children }) {
+	const value = {};
+
+	return (
+		<itemsCrudContext.Provider value={value}>
+			{children}
+		</itemsCrudContext.Provider>
+	);
+}
+
+export function useItemsCrud() {
+	return useContext(itemsCrudContext);
+}
+```
+
 ## Add Function
 
 ### JavaScript Spread Operator + Form Submit
