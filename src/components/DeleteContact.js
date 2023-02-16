@@ -1,8 +1,9 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import profile from "../images/profile.png";
 import { useContactsCrud } from "../context/contacts-crud-context";
 import { Box, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export default function DeleteContact() {
   const { deleteContact } = useContactsCrud();
@@ -33,16 +34,22 @@ export default function DeleteContact() {
         <div>{email}</div>
       </Box>
 
-      <div>
+      <Box>
         <IconButton
           aria-label="delete"
           sx={{ color: "red" }}
           onClick={() => deleteContactHandler(id)}
         >
           <DeleteIcon />
-          YES
+          Yes
         </IconButton>
-      </div>
+        <Link to="/" className="link-btn">
+          <IconButton aria-label="delete" sx={{ color: "blue" }}>
+            <CancelIcon />
+            No
+          </IconButton>
+        </Link>
+      </Box>
     </Box>
   );
 }

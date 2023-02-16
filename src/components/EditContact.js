@@ -1,28 +1,33 @@
-import { Box, Button, ButtonGroup, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../App.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContactsCrud } from "../context/contacts-crud-context";
 
-const EditContact = ({ contact }) => {
+const EditContact = () => {
   const location = useLocation();
   const { id, name, email } = location.state.contact;
-  const newDetail = {
-    name,
-    email,
-  };
-  const [addContactForm, setAddContactForm] = useState(newDetail);
+  // const newDetail = {
+  //   name,
+  //   email,
+  // };
+  // const [addContactForm, setAddContactForm] = useState(newDetail);
   const navigate = useNavigate();
   const { updateContactHandler } = useContactsCrud();
+  const [newName, setNewName] = useState(name);
+  const [newEmail, setNewEmail] = useState(email);
 
   const update = (e) => {
     e.preventDefault();
-    if (addContactForm.name === "" || addContactForm.email === "") {
+    if (newName === "" || newEmail === "") {
       alert("All the fields are required");
       return;
     }
-    updateContactHandler({ id, ...addContactForm });
-    setAddContactForm({ name: "", email: "" });
+    // updateContactHandler({ id, ...addContactForm });
+    // setAddContactForm({ name: "", email: "" });
+    updateContactHandler({ id, name: newName, email: newEmail });
+    setNewName("");
+    setNewEmail("");
     navigate(-1);
   };
 
@@ -44,10 +49,10 @@ const EditContact = ({ contact }) => {
             id="name"
             label="Name"
             type="text"
-            value={addContactForm.name}
-            onChange={(e) =>
-              setAddContactForm({ ...addContactForm, name: e.target.value })
-            }
+            // value={addContactForm.name}
+            value={newName}
+            // onChange={(e) => setAddContactForm({ ...addContactForm, name: e.target.value }) }
+            onChange={(e) => setNewName(e.target.value)}
           />
         </div>
         <div>
@@ -55,17 +60,17 @@ const EditContact = ({ contact }) => {
             id="email"
             label="Email Address"
             type="email"
-            value={addContactForm.email}
-            onChange={(e) =>
-              setAddContactForm({ ...addContactForm, email: e.target.value })
-            }
+            // value={addContactForm.email}
+            // onChange={(e) => setAddContactForm({ ...addContactForm, email: e.target.value }) }
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
           />
         </div>
 
-        <Button variant="outlined" component="label">
+        {/* <Button variant="outlined" component="label">
           Upload Image
           <input hidden accept="image/*" multiple type="file" />
-        </Button>
+        </Button> */}
 
         <Grid
           item
@@ -75,7 +80,7 @@ const EditContact = ({ contact }) => {
         >
           <Box sx={{ "& button": { m: 1 } }}>
             <div>
-              <Button variant="contained" size="small">
+              <Button variant="contained" size="small" type="submit">
                 Edit
               </Button>
               <Link to="/" className="link-btn">

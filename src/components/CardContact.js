@@ -15,11 +15,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import React from "react";
 import user from "../images/user.png";
 import { Link } from "react-router-dom";
-import { useContactsCrud } from "../context/contacts-crud-context";
 
 const CardContact = ({ contact }) => {
   const { id, name, email } = contact;
-  const { deleteContact } = useContactsCrud();
 
   return (
     <Grid sx={{ p: 1 }}>
@@ -32,11 +30,7 @@ const CardContact = ({ contact }) => {
           alt="Contact Image"
         />
 
-        <Link
-          to={{ pathname: `/contact/${id}` }}
-          state={{ contact }}
-          className="link-btn"
-        >
+        <Link to={`/contact/${id}`} state={{ contact }} className="link-btn">
           <CardContent>
             <Tooltip title={name + `'s detail`}>
               <Box>
@@ -64,11 +58,7 @@ const CardContact = ({ contact }) => {
               <DeleteIcon />
             </IconButton>
           </Link>
-          <Link
-            to={{ pathname: `/edit` }}
-            state={{ contact: contact }}
-            className="link-btn"
-          >
+          <Link to="/edit" state={{ contact: contact }} className="link-btn">
             <IconButton aria-label="EDIT" sx={{ color: "blue" }}>
               <EditIcon />
             </IconButton>

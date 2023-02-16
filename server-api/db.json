@@ -1,18 +1,13 @@
 {
   "contacts": [
     {
-      "id": "524f5768-f656-48db-aadf-e66f14b12b6a",
-      "name": "umar",
-      "email": "um@email.com"
-    },
-    {
       "id": "44045e90-a65e-4c59-970b-8f9644925b04",
-      "name": "jeong eunji",
+      "name": "Jeong Eunji",
       "email": "eunji@email.com"
     },
     {
       "id": "607c4a9a-db34-49cf-98d7-f359a188f799",
-      "name": "yunho",
+      "name": "Yunho",
       "email": "yuyu@email.com"
     }
   ]
