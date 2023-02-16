@@ -72,18 +72,18 @@ const AddContact = () => {
             m: 1,
           }}
         >
-          <ButtonGroup
-            variant="contained"
-            aria-label="outlined primary button group"
-            sx={{ gap: 2 }}
-          >
-            <Button type="submit" color="success">
-              Add
-            </Button>
-            <Link to={`/`} className="link-btn">
-              <Button>Back</Button>
-            </Link>
-          </ButtonGroup>
+          <Box sx={{ "& button": { m: 1 } }}>
+            <div>
+              <Button variant="contained" size="small" type="submit">
+                Add
+              </Button>
+              <Link to="/" className="link-btn">
+                <Button variant="contained" size="small">
+                  Cancel
+                </Button>
+              </Link>
+            </div>
+          </Box>
         </Grid>
       </Box>
     </div>

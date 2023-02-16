@@ -8,6 +8,7 @@ import ListContact from "./components/ListContact";
 import DetailContact from "./components/DetailContact";
 import EditContact from "./components/EditContact";
 import { ContactsCrudContextProvider } from "./context/contacts-crud-context";
+import DeleteContact from "./components/DeleteContact";
 
 function App(props) {
   return (
@@ -26,6 +27,7 @@ function App(props) {
           <Route path="/add" {...props} element={<AddContact />} />
           <Route path="/edit" {...props} element={<EditContact />} />
           <Route path="/contact/:id" element={<DetailContact />} />
+          <Route path="/delete/:id" element={<DeleteContact />} />
         </Routes>
       </ContactsCrudContextProvider>
       <FooterContact />

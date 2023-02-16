@@ -18,8 +18,10 @@ const DetailContact = ({ contact }) => {
   const { name, email } = location.state.contact;
 
   return (
-    <Grid container sx={{ justifyContent: "center", alignItems: "center" }}>
-      <h1>Contact Detail</h1>
+    <Grid
+      container
+      sx={{ justifyContent: "center", alignItems: "center", p: 4 }}
+    >
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component="img"

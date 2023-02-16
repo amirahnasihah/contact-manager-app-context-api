@@ -1,29 +1,19 @@
 {
   "contacts": [
     {
-      "id": "d1db2720-70ee-4107-b49d-b06ac8cf9586",
-      "name": "John Doe",
-      "email": "john@example.com"
+      "id": "524f5768-f656-48db-aadf-e66f14b12b6a",
+      "name": "umar",
+      "email": "um@email.com"
     },
     {
-      "id": "3bc4ef78-261b-46b9-954d-f18149c6b1c8",
-      "name": "Jane Doe",
-      "email": "jane@example.com"
+      "id": "44045e90-a65e-4c59-970b-8f9644925b04",
+      "name": "jeong eunji",
+      "email": "eunji@email.com"
     },
     {
-      "id": "b1a0f5c9-fe9a-4b49-983b-92043e974133",
-      "name": "Giyu Tomioka",
-      "email": "giyu@example.com"
-    },
-    {
-      "id": "ce5cd635-8576-4003-86e8-c79f19476f4a",
-      "name": "Huh Gak",
-      "email": "huhgak@example.kr"
-    },
-    {
-      "id": "a8432554-c8e6-4f63-83aa-af955ebecb6f",
-      "name": "Jeong Eunji",
-      "email": "meongji@example.kr"
+      "id": "607c4a9a-db34-49cf-98d7-f359a188f799",
+      "name": "yunho",
+      "email": "yuyu@email.com"
     }
   ]
 }

@@ -21,10 +21,6 @@ const CardContact = ({ contact }) => {
   const { id, name, email } = contact;
   const { deleteContact } = useContactsCrud();
 
-  const deleteContactHandler = (id) => {
-    deleteContact(id);
-  };
-
   return (
     <Grid sx={{ p: 1 }}>
       <Card sx={{ display: "flex" }}>
@@ -38,7 +34,7 @@ const CardContact = ({ contact }) => {
 
         <Link
           to={{ pathname: `/contact/${id}` }}
-          state={{ contact: contact }}
+          state={{ contact }}
           className="link-btn"
         >
           <CardContent>
@@ -59,13 +55,15 @@ const CardContact = ({ contact }) => {
           disableSpacing
           // sx={{ justifyContent: "flex-end", width: "100%" }}
         >
-          <IconButton
-            aria-label="DELETE"
-            sx={{ color: "red" }}
-            onClick={() => deleteContactHandler(id)}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <Link to={{ pathname: `/delete/${id}` }} state={contact}>
+            <IconButton
+              aria-label="DELETE"
+              sx={{ color: "red" }}
+              // onClick={() => deleteContactHandler(id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Link>
           <Link
             to={{ pathname: `/edit` }}
             state={{ contact: contact }}
