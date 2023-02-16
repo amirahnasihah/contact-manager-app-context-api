@@ -51,6 +51,28 @@
       - [switch case for kids](#switch-case-for-kids)
       - [DEBUGGING W/ CONSOLE W/ useRef](#debugging-w-console-w-useref)
 
+# Basic Setup Context API
+
+```javascript
+import { createContext, useContext } from "react";
+
+const itemsCrudContext = createContext();
+
+export function ItemsCrudContextProvider({ children }) {
+	const value = {};
+
+	return (
+		<itemsCrudContext.Provider value={value}>
+			{children}
+		</itemsCrudContext.Provider>
+	);
+}
+
+export function useItemsCrud() {
+	return useContext(itemsCrudContext);
+}
+```
+
 ## Add Function
 
 ### JavaScript Spread Operator + Form Submit
@@ -1500,3 +1522,18 @@ const ListContact = ({ contacts, deleteContact, term, searchKeyword }) => {
 5. `console.log(Object.values(contact.join("")));`:
 
 > a space in front on search bar -> to resolve this issue, set the initial value of the searchTerm to an empty string, `""` or use `join("")`  the space in between.
+
+## UUID Installation
+
+1. Install
+
+```bash
+npm install uuid
+```
+
+2. Create a UUID (ES6 module syntax)
+
+```javascript
+import { v4 as uuidv4 } from 'uuid';
+uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
+```
